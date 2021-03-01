@@ -54,7 +54,7 @@ Mình đã cài sẵn 1 cái db mongodb ở trên cloud. Các idol nên tạo ri
   --index.js
 --package.json
 ```
-## Convention
+## Code Convention
 Tên biến đặt theo thisIsAvarible, tên class hoặc tên compennent theo ThisIsClass, tên hằng số theo THIS_IS_CONST.
 
 Tên 1 object đơn: user, list object: users
@@ -63,8 +63,27 @@ Tên file: đặt theo thisIsAFile, ngoại trừ tên compenent là ThisIsFileC
 
 Các folder nên có file index.js để export tất cả hàm, biến, class cần thiết trong folder đấy. Khi cần import chỉ cần dẫn đường link import đến folder. 
 
+### Response format
+Sẽ gồm 2 phần chính là data và error, nếu data được trả về thành công không lỗi thì error sẽ null, nếu có lỗi phần data sẽ null
+
+```
+\\ response success
+{
+  data: {
+    message: "This is a test"
+  }
+}
+
+\\ response failed
+{
+  error: {
+    message: "Ops... Something wrongs"
+  }
+}
+```
+
 ### demo
-bản demo tồn tại trong thời gian đầu để idol hiểu cấu trúc code và convention và test setup code
+bản demo tồn tại trong thời gian đầu để idol hiểu cấu trúc code, convention và test setup code
 
 ```
 GET /api/v1/demos
