@@ -11,13 +11,13 @@ Cài đặt mongodb compass.
 Setup server
 ```bash
 cd server
-npm install server
+npm install
 npm run dev
 ```
 Setup client
 ```bash
 cd client
-npm install client
+npm install
 npm start
 ```
 
