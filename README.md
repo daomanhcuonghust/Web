@@ -63,6 +63,9 @@ Tên file: đặt theo thisIsAFile, ngoại trừ tên compenent là ThisIsFileC
 
 Các folder nên có file index.js để export tất cả hàm, biến, class cần thiết trong folder đấy. Khi cần import chỉ cần dẫn đường link import đến folder. 
 
+## git convention
+https://github.com/DSC-HUST/Web-1-todolist
+
 ### Response format
 Sẽ gồm 2 phần chính là data và error, nếu data được trả về thành công không lỗi thì error sẽ null, nếu có lỗi phần data sẽ null
 
@@ -113,4 +116,4 @@ Please make sure to update tests as appropriate.
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
-## test 123
+## test
