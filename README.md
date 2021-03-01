@@ -63,6 +63,27 @@ Tên file: đặt theo thisIsAFile, ngoại trừ tên compenent là ThisIsFileC
 
 Các folder nên có file index.js để export tất cả hàm, biến, class cần thiết trong folder đấy. Khi cần import chỉ cần dẫn đường link import đến folder. 
 
+### demo
+bản demo tồn tại trong thời gian đầu để idol hiểu cấu trúc code và convention và test setup code
+
+```
+GET /api/v1/demos
+```
+Trả về danh sách demo
+
+```
+POST /api/v1/todos
+
+{
+  "name": "example"
+}
+
+```
+tạo 1 demo mới có name = example.
+
+Trong model demo chỉ có thuộc tính name chỉ chứa các kí tự latinh độ dài từ 1 đến 20, ko chứa kí tự cách.
+
+Sau khi setup xong các idol có thể test bên server và bên client để kiểm tra.
 
 
 ## Contributing
