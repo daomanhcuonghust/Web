@@ -56,9 +56,13 @@ Mình đã cài sẵn 1 cái db mongodb ở trên cloud. Các idol nên tạo ri
 ```
 ## Convention
 Tên biến đặt theo thisIsAvarible, tên class hoặc tên compennent theo ThisIsClass, tên hằng số theo THIS_IS_CONST.
+
 Tên 1 object đơn: user, list object: users
+
 Tên file: đặt theo thisIsAFile, ngoại trừ tên compenent là ThisIsFileCompent.
+
 Các folder nên có file index.js để export tất cả hàm, biến, class cần thiết trong folder đấy. Khi cần import chỉ cần dẫn đường link import đến folder. 
+
 
 
 ## Contributing
