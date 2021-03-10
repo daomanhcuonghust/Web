@@ -15,8 +15,3 @@ export const createDemo = handleAsync(async(req, res) => {
         data: demo
     });
 })
-export const checkLogin = handleAsync(async(req, res) => {
-    const token = await DemoService.check(req.body);
-    res.cookie(token);
-    res.json('set cookie success');
-})
