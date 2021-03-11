@@ -1,6 +1,6 @@
 import express from 'express';
-import {getDemo, createDemo} from '../controllers';
-import {validateCreateDemo} from '../middlewares';
+import {getDemo, createDemo, checkLogin,logout} from '../controllers';
+import {validateCreateDemo, validateLogin} from '../middlewares';
 
 const router = express.Router();
 
