@@ -7,4 +7,4 @@ const tokenSchema = new mongoose.Schema({
     },
 });
 
-export const logout = mongoose.model('logouttoken', tokenSchema);
+export const logouttoken = mongoose.model('logouttoken', tokenSchema);
