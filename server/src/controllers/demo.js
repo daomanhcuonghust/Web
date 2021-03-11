@@ -1,6 +1,5 @@
 import {handleAsync} from '../utils';
 import {DemoService} from '../services';
-import cookieParser from 'cookie-parser';
 
 export const getDemo = handleAsync(async(req, res) => {
     const demos = await DemoService.getAll();

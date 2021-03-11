@@ -1,9 +1,9 @@
 import {logout} from '../models';
 
 
-export const create = async (data) => {
+export const disable = async (data) => {
     logout.create({
         Token: data
     })
-    return await create;
+    return await disable;
 }
