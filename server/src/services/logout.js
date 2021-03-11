@@ -2,8 +2,7 @@ import {logouttoken} from '../models';
 
 
 export const disable = async (data) => {
-    logouttoken.create({
+    return await logouttoken.create({
         Token: data
     })
-    return await logouttoken.create;
 }
