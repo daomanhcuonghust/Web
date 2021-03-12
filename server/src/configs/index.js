@@ -4,7 +4,8 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const mongooseOptions = {
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useCreateIndex: true
 }
 
 export {
