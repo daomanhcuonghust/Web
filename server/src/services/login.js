@@ -5,11 +5,11 @@ import bcrypt from 'bcrypt';
 export const checklogin = async (data) => {
     try {
         const user = await User.findOne({ email: data.email})
-        if (!user) throw new error()
+        if (!user) throw new Error()
         const isMatch = await user.isValidPassword(data.password)
-        if (!isMatch) throw new error()
+        if (!isMatch) throw new Error()
         return data
     } catch (error) {
-        if (error) return 'error'
+        if (error) return 'Error'
     }
 }
