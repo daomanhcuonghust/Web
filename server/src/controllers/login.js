@@ -6,7 +6,7 @@ import {JWT_SECRET} from '../configs';
 export const checkLogin = handleAsync(async(req, res) => {
     const data = await LoginService.checklogin(req.body);
     res.cookie('token', jwt.sign({
-        _id: data._id
+        _id: data
     }, JWT_SECRET));
-    res.json('Login success');
+    res.json(data);
 })
