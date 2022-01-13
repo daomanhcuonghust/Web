@@ -1,4 +1,4 @@
-import { User } from '../models';
+import { Staff } from '../models';
 export const getAll = async () => {
     return await User.find({
 
@@ -6,13 +6,15 @@ export const getAll = async () => {
 }
 
 export const create = async (data) => {
-    const { phoneNumber, email, password, firstName, lastName } = data
-    const user = new User({
+    const { phoneNumber, email, password, firstName, lastName,role,salary } = data
+    const user = new Staff({
         phoneNumber,
         email,
         password,
         firstName,
-        lastName
+        lastName,
+        role,
+        salary
     });
     return await user.save();
 }

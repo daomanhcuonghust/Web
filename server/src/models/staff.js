@@ -1,7 +1,13 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
-const UserSchema = new mongoose.Schema({
+const StaffSchema = new mongoose.Schema({
+    // staff_code:{
+    //     type: String,
+    //     required: true,
+    //     unique: true,
+    //     lowercase: true
+    // },
     phoneNumber: {
         type: String,
         required: true,
@@ -13,7 +19,6 @@ const UserSchema = new mongoose.Schema({
         required: true,
         minLength: 6,
         maxLength: 50
-
     },
     firstName: {
         type: String,
@@ -44,19 +49,19 @@ const UserSchema = new mongoose.Schema({
             }
         }
     },
-    is_vip: {
-        type: Boolean,
-        required: true,
-        default: false,
+    role: {
+        type: Number,
+        required: true
 
     },
-    id_vip_transition: {
-        type: String,
-        required: false
-    }  
+    salary: {
+        type: Number,
+        required: true
+    }
+    
 
 });
-UserSchema.pre('save', async function (next) {
+StaffSchema.pre('save', async function (next) {
     // Hash the password before saving the user model
     const user = this
     if (user.isModified('password')) {
@@ -65,7 +70,7 @@ UserSchema.pre('save', async function (next) {
     next()
 })
 
-UserSchema.methods.isValidPassword = async function (password) {
+StaffSchema.methods.isValidPassword = async function (password) {
     try {
         return await bcrypt.compare(password, this.password);
     } catch (error) {
@@ -73,4 +78,4 @@ UserSchema.methods.isValidPassword = async function (password) {
     }
 };
 
-export const User = mongoose.model('User', UserSchema);
+export const Staff = mongoose.model('Staff', StaffSchema);
