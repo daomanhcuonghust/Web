@@ -1,4 +1,4 @@
-import { Facilities, Ticket } from "../models"
+import { Facilities } from "../models"
 import { handleAsync } from "../utils"
 
 export const createFacilities = handleAsync(async (req, res) => {

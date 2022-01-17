@@ -5,3 +5,5 @@ export * from './login';
 export * from './logout'
 export * from './staffSignup'
 export * from './ticket'
+export * from './facilities'
+export * from './event'

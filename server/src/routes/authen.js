@@ -12,6 +12,9 @@ import {
   createFacilities,
   updateFacilities,
   deleteFacilities,
+  createEvent,
+  updateEvent,
+  deleteEvent
 } from "../controllers"
 import {
   validateLogin,
@@ -32,6 +35,9 @@ router.delete("/ticket/:id", deleteTicket)
 router.post("/facilities", createFacilities)
 router.patch("/facilities/:id", updateFacilities)
 router.delete("/facilities/:id", deleteFacilities)
+router.post("/Event", createEvent)
+router.patch("/Event/:id", updateEvent)
+router.delete("/Event/:id", deleteEvent)
 
 router.post("/user-buy-ticket", UserBuyTicket)
 
