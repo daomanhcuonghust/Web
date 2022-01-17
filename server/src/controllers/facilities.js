@@ -1,0 +1,64 @@
+import { Facilities, Ticket } from "../models"
+import { handleAsync } from "../utils"
+
+export const createFacilities = handleAsync(async (req, res) => {
+  try {
+    const data = new Facilities(req.body)
+    await data.save()
+    res.json({
+      message: "Thêm cơ sở vật chất thành công",
+      data,
+    })
+  } catch (error) {
+    res.json({
+      message: "Có lỗi xảy ra",
+      error,
+    })
+  }
+})
+
+export const updateFacilities = handleAsync(async (req, res) => {
+  try {
+    const data = await Facilities.findByIdAndUpdate(req.params.id, {
+      facilities_code: req.body.facilities_code,
+      name: req.body.name,
+      region: req.body.region,
+      status: req.body.status,
+    })
+    if (!data) {
+      return res.json({
+        message: "Cập nhật thất bại",
+        cause: "CSVC không tồn tại",
+      })
+    }
+    res.json({
+      message: "Cập nhật thành công",
+      data,
+    })
+  } catch (error) {
+    res.json({
+      message: "Có lỗi xảy ra",
+      error,
+    })
+  }
+})
+
+export const deleteFacilities = handleAsync(async (req, res) => {
+  try {
+    const data = await Facilities.findByIdAndRemove(req.params.id)
+    if (!data) {
+      return res.json({
+        message: "Xóa thất bại",
+        cause: "CSVC không tồn tại",
+      })
+    }
+    res.json({
+      message: "Xóa CSVC thành công",
+    })
+  } catch (error) {
+    res.json({
+      message: "Xóa CSVC thất bại",
+      error,
+    })
+  }
+})
