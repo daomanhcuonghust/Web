@@ -4,7 +4,10 @@ const vip_transition_Schema = new mongoose.Schema({
     is_paid: {
         type: Boolean,
         require: true,
-
+    },
+    time_expired:{
+        type: String,
+        require: true,
     }
 },{timestamps:true});
 

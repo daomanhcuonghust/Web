@@ -1,88 +1,140 @@
-import { Event,User,User_event } from "../models";
-import {handleAsync} from '../utils';
+import { Event, User, User_event } from "../models";
+import { handleAsync } from "../utils";
 
-export const createEvent = handleAsync(async(req, res) => {
-    try{
-        const data = new Event(req.body);
-        await data.save()
-        res.json({
-            message:"Tạo sự kiện thành công",
-            data
-        });
-    }catch(error){
-        res.json({
-            message:"Có lỗi xảy ra",
-            error
-        });
+export const createEvent = handleAsync(async (req, res) => {
+  try {
+    const data = new Event(req.body);
+    await data.save();
+    res.json({
+      message: "Tạo sự kiện thành công",
+      data,
+    });
+  } catch (error) {
+    res.json({
+      message: "Có lỗi xảy ra",
+      error,
+    });
+  }
+});
+
+export const updateEvent = handleAsync(async (req, res) => {
+  try {
+    const data = await Event.findByIdAndUpdate(req.params.id, {
+      image: req.body.image,
+      name: req.body.name,
+    });
+    if (!data) {
+      return res.json({
+        message: "Cập nhật thất bại",
+        cause: "Vé không tồn tại",
+      });
     }
-})
+    res.json({
+      message: "Cập nhật thành công",
+      data,
+    });
+  } catch (error) {
+    res.json({
+      message: "Có lỗi xảy ra",
+      error,
+    });
+  }
+});
 
-export const updateEvent = handleAsync(async(req, res) => {
-    try{
-        const data = await Event.findByIdAndUpdate(req.params.id,{
-            image:req.body.image,
-            name:req.body.name,
-        })
-        if(!data){
-           return res.json({
-                message:"Cập nhật thất bại",
-                cause:"Vé không tồn tại"
-            });
-        }
-        res.json({
-            message:"Cập nhật thành công",
-            data
-        });
-    }catch(error){
-        res.json({
-            message:"Có lỗi xảy ra",
-            error
-        });
+export const deleteEvent = handleAsync(async (req, res) => {
+  try {
+    const data = await Event.findByIdAndRemove(req.params.id);
+    if (!data) {
+      return res.json({
+        message: "Xóa thất bại",
+        cause: "Vé không tồn tại",
+      });
     }
-})
+    res.json({
+      message: "Xóa vé thành công",
+    });
+  } catch (error) {
+    res.json({
+      message: "Xóa vé thất bại",
+      error,
+    });
+  }
+});
 
-export const deleteEvent = handleAsync(async(req, res) => {
-    try{
-        const data = await Event.findByIdAndRemove(req.params.id);
-        if(!data){
-            return res.json({
-                 message:"Xóa thất bại",
-                 cause:"Vé không tồn tại"
-             });
-         }
-        res.json({
-            message:"Xóa vé thành công"
-        });
-    }catch(error){
-        res.json({
-            message:"Xóa vé thất bại",
-            error
-        });
+export const UserRegisterEvent = handleAsync(async (req, res) => {
+  try {
+    const isExistTicket = await Event.findById(req.body.id_ticket);
+    const isExistUser = await User.findById(req.body.id_user);
+    if (!isExistTicket && !isExistUser) {
+      return res.status(200).json({
+        status: 404,
+        message: "Vé hoặc người mua vé không tồn tại",
+      });
     }
-})
 
-export const UserRegisterEvent = handleAsync(async(req, res) => {
-    try{
-        console.log(req)
-        const isExistTicket = await Event.findById(req.body.id_ticket)
-        const isExistUser = await User.findById(req.body.id_user)
-        if(!isExistTicket && !isExistUser){
-            return res.status(200).json({
-                status:404,
-                message:"Vé hoặc người mua vé không tồn tại"
-            });
-        }
+    const data = new User_event(req.body);
+    await data.save();
+    res.json({
+      message: "Mua vé thành công",
+      data,
+    });
+  } catch (error) {
+    res.json({
+      message: "Có lỗi xảy ra",
+      error,
+    });
+  }
+});
 
-        const data = new User_event(req.body);
-        await data.save()
-        res.json({
-            message:"Mua vé thành công",
-            data
-        });
-    }catch(error){
-        res.json({
-            message:"Có lỗi xảy ra",
-            error
-        });
+//Get the latest 3 events
+export const latestEvents = async (req, res, next) => {
+  try {
+    const listEvent = await Event.find()
+      .sort({ time_start: -1 })
+      .limit(3)
+      .exec();
+    res
+      .status(200)
+      .json({ success: true, message: "Get event success", result: listEvent });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "INTERNAL SERVER ERROR" });
+  }
+};
+
+//Get id event
+export const getOneEvent = async (req, res) => {
+  const idParam = req.params.id;
+
+  try {
+    const event = await Event.findById({ _id: idParam });
+    if (!event) {
+      return res.status(404).json({ success: false, message: "Not Found" });
     }
-})
+    res
+      .status(200)
+      .json({ success: true, message: "Get event success", result: event });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "INTERNAL SERVER ERROR" });
+  }
+};
+
+//all events
+export const getAllEvent = async (req, res, next) => {
+  const page = parseInt(req.query.page);
+  const limit = parseInt(req.query.limit);
+  const skipIndex = (page - 1) * limit;
+
+  try {
+    const events =await Event.find()
+      .sort({ time_start: -1 })
+      .skip(skipIndex)
+      .limit(limit)
+      .exec();
+
+    res
+      .status(200)
+      .json({ success: true, message: "Get event success", result: events });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "INTERNAL SERVER ERROR" });
+  }
+};
