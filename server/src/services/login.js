@@ -9,7 +9,7 @@ export const checklogin = async (data) => {
         if (!user) throw new Error()
         const isMatch = await user.isValidPassword(password)
         if (!isMatch) throw new Error()
-        return data
+        return user
     } catch (error) {
         if (error) return 'Error'
     }

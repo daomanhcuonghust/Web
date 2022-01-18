@@ -1,5 +1,6 @@
 import {handleAsync} from '../utils';
 import {UserService} from '../services';
+import { JWT_SECRET } from "../configs";
 
 export const getUSer = handleAsync(async(req, res) => {
     const users = await UserService.getAll();
@@ -10,7 +11,12 @@ export const getUSer = handleAsync(async(req, res) => {
 
 export const createUser = handleAsync(async(req, res) => {
     const user = await UserService.create(req.body);
+    const accessToken = jwt.sign(
+        user._id,
+        JWT_SECRET
+      );
     res.json({
-        data: user
+        data: user,
+        accessToken:accessToken
     });
 })
