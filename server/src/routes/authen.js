@@ -21,14 +21,21 @@ import {
   getAllEvent,
   createTypeTicket,
   infoTicket,
-  updateTypeTicket
+  updateTypeTicket,
+  getStaff,
+  updateStaff,
+  deleteStaff,
+  getUSer,
+  updateUser,
+  deleteUser,
+  getIncome,
 } from "../controllers"
 import {
   validateLogin,
   validateSignup,
   validateSignupStaff,
-  signedIn
-
+  signedIn,
+  validateViewIncome,
 } from "../middlewares"
 
 const router = express.Router()
@@ -40,25 +47,35 @@ router.post("/signup", validateSignup, createUser)
 router.post("/signup-staff", validateSignupStaff, createStaff)
 
 router.post("/ticket", CreateTicket)
-router.get("/ticket/:id",infoTicket);
+router.get("/ticket/:id", infoTicket)
 router.patch("/ticket/:id", updateTicket)
 router.delete("/ticket/:id", deleteTicket)
-router.put("/typeTicket/:id",createTypeTicket);
-router.put("/ticket/:id/:typeId",updateTypeTicket)
+router.put("/typeTicket/:id", createTypeTicket)
+router.put("/ticket/:id/:typeId", updateTypeTicket)
+router.post("/ticketIncome", validateViewIncome, getIncome)
 
 router.post("/facilities", createFacilities)
 router.patch("/facilities/:id", updateFacilities)
 router.delete("/facilities/:id", deleteFacilities)
 router.post("/Event", createEvent)
 
+router.get("/staffs", getStaff)
+router.post("/staffs", createStaff)
+router.patch("/staff/:id", updateStaff)
+router.delete("/staff/:id", deleteStaff)
+
+router.get("/users", getUSer)
+router.post("/users", createUser)
+router.patch("/users/:id", updateUser)
+router.delete("/users/:id", deleteUser)
 
 router.get("/event/:id", getOneEvent)
 router.patch("/Event/:id", updateEvent)
 router.delete("/Event/:id", deleteEvent)
-router.get("/latestEvents",latestEvents)
-router.get("/allEvent",getAllEvent)
+router.get("/latestEvents", latestEvents)
+router.get("/allEvent", getAllEvent)
 
 router.post("/user-buy-ticket", UserBuyTicket)
-router.post("/ticket-vip",signedIn,createVipTicket)
+router.post("/ticket-vip", signedIn, createVipTicket)
 
 export default router
