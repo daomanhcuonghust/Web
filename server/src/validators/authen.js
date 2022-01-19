@@ -7,6 +7,7 @@ const firstName = Joi.string().min(1).max(20).required()
 const lastName = Joi.string().min(1).max(20).required()
 const role = Joi.number().required()
 const salary = Joi.number().required()
+const time_checkout = Joi.date().required()
 
 export const createLogin = Joi.object({
   phoneNumber,

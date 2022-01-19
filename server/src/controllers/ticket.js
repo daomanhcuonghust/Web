@@ -240,7 +240,7 @@ export const userTicket = async (req, res, next) => {
   }
 };
 
-})
+
 
 export const getIncome = handleAsync(async (req, res) => {
   try {

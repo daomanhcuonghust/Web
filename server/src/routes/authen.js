@@ -28,7 +28,8 @@ import {
   UserRegisterEvent,
   participantsEvent,
   checkInTicket,
-  checkoutTicket
+  checkoutTicket,
+
 
   getStaff,
   updateStaff,

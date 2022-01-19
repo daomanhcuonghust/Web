@@ -1,6 +1,8 @@
 import {handleAsync} from '../utils';
 import {UserService} from '../services';
 import { JWT_SECRET } from "../configs";
+import jwt from "jsonwebtoken";
+
 
 export const getUSer = handleAsync(async(req, res) => {
     const users = await UserService.getAll();
