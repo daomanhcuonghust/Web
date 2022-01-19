@@ -15,6 +15,19 @@ export const checklogin = async (data) => {
     }
 }
 
+export const checkloginStaf = async (data) => {
+    const {phoneNumber,password} = data
+    try {
+        const user = await Staff.findOne({ phoneNumber})
+        if (!user) throw new Error()
+        const isMatch = await user.isValidPassword(password)
+        if (!isMatch) throw new Error()
+        return user
+    } catch (error) {
+        if (error) return 'Error'
+    }
+}
+
 export const checkloginStaff = async (data) => {
     const {phoneNumber,password} = data
     try {

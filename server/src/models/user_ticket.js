@@ -27,6 +27,16 @@ const user_ticketSchema = new mongoose.Schema({
     price: {
         type: Number,
         require: true
+    },
+    time_checkin:{
+        type: Date,
+        require: true,
+        default:null
+    },
+    time_checkout:{
+        type: Date,
+        require: true,
+        default:null
     }
 }, {timestamps: true})
 

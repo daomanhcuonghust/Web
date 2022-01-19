@@ -21,7 +21,13 @@ import {
   getAllEvent,
   createTypeTicket,
   infoTicket,
-  updateTypeTicket
+  updateTypeTicket,
+  userTicket,
+  deleteTypeTickte,
+  UserRegisterEvent,
+  participantsEvent,
+  checkInTicket,
+  checkoutTicket
 } from "../controllers"
 import {
   validateLogin,
@@ -44,13 +50,16 @@ router.get("/ticket/:id",infoTicket);
 router.patch("/ticket/:id", updateTicket)
 router.delete("/ticket/:id", deleteTicket)
 router.put("/typeTicket/:id",createTypeTicket);
+router.delete("/typeTicket/:id/:typeId",deleteTypeTickte);
 router.put("/ticket/:id/:typeId",updateTypeTicket)
+router.get("/ticket/user/:userId",userTicket)
 
 router.post("/facilities", createFacilities)
 router.patch("/facilities/:id", updateFacilities)
+router.post("/userEvent",UserRegisterEvent);
 router.delete("/facilities/:id", deleteFacilities)
 router.post("/Event", createEvent)
-
+router.get("/event/user/:id",participantsEvent)
 
 router.get("/event/:id", getOneEvent)
 router.patch("/Event/:id", updateEvent)
@@ -61,4 +70,6 @@ router.get("/allEvent",getAllEvent)
 router.post("/user-buy-ticket", UserBuyTicket)
 router.post("/ticket-vip",signedIn,createVipTicket)
 
+router.put("/staff/checkin",signedIn,checkInTicket);
+router.put("/staff/checkout",signedIn,checkoutTicket);
 export default router
