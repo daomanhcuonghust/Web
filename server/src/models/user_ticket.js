@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose"
 
 const user_ticketSchema = new mongoose.Schema({
+
     id_ticket: {
         type: String,
         require: true
@@ -40,4 +41,5 @@ const user_ticketSchema = new mongoose.Schema({
     }
 }, {timestamps: true})
 
-export const User_ticket = mongoose.model('User_ticket', user_ticketSchema)
+
+export const User_ticket = mongoose.model("User_ticket", user_ticketSchema)
