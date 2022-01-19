@@ -1,0 +1,25 @@
+.search-bar {
+    width: 70%;
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+  }
+
+.container {
+    background-color: white;
+    border-radius: 5px;
+    padding: 50px;
+    padding-top: 5px;
+}
+.ticket {
+    display: block;
+    background-color:white;
+    width: 90%;
+    margin: 20px;
+    padding: 10px;
+    text-align: left;
+}
+
+.tab {
+    width: 70%;
+}
