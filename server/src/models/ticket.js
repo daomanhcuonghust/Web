@@ -10,9 +10,7 @@ const ticketSchema = new mongoose.Schema(
     type: [
       {
         nameTicket: String,
-        price: Number,
-        time_start: Date,
-        time_end: Date,
+        price: Number
       },
     ],
   },

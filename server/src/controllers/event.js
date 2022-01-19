@@ -63,7 +63,7 @@ export const deleteEvent = handleAsync(async (req, res) => {
 
 export const UserRegisterEvent = handleAsync(async (req, res) => {
   try {
-    const isExistTicket = await Event.findById(req.body.id_ticket);
+    const isExistTicket = await Event.findById(req.body.id_event);
     const isExistUser = await User.findById(req.body.id_user);
     if (!isExistTicket && !isExistUser) {
       return res.status(200).json({
@@ -73,10 +73,13 @@ export const UserRegisterEvent = handleAsync(async (req, res) => {
     }
 
     const data = new User_event(req.body);
+    const { description, image, ...event } = isExistTicket._doc;
+    const { password, createdAt, email, ...users } = isExistUser._doc;
+
     await data.save();
     res.json({
       message: "Mua vé thành công",
-      data,
+      data: { ...users, ...event },
     });
   } catch (error) {
     res.json({
@@ -125,7 +128,7 @@ export const getAllEvent = async (req, res, next) => {
   const skipIndex = (page - 1) * limit;
 
   try {
-    const events =await Event.find()
+    const events = await Event.find()
       .sort({ time_start: -1 })
       .skip(skipIndex)
       .limit(limit)
@@ -134,6 +137,35 @@ export const getAllEvent = async (req, res, next) => {
     res
       .status(200)
       .json({ success: true, message: "Get event success", result: events });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "INTERNAL SERVER ERROR" });
+  }
+};
+
+//Get Information of event participants
+export const participantsEvent = async (req, res, next) => {
+  try {
+    const eventId = req.params.id;
+    const event = await Event.findById(eventId);
+    if (!event)
+      return res
+        .status(404)
+        .json({ success: false, message: "Not Found Event" });
+
+    const participants = await User_event.find({ id_event: eventId })
+
+    const userId = participants.map((item, index) => item.id_user);
+
+     const users = await User.find({ _id: { $in: userId } },{password: 0});
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Information of event participants",
+        result: users,
+        event
+      });
   } catch (error) {
     res.status(500).json({ success: false, message: "INTERNAL SERVER ERROR" });
   }

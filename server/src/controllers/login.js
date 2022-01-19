@@ -8,7 +8,6 @@ export const checkLogin = handleAsync(async (req, res) => {
 
   const { password, ...other } = data._doc;
 
-  console.log(other, "data");
 
   const accessToken = jwt.sign(
       {
