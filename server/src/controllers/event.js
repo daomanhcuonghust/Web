@@ -64,7 +64,7 @@ export const deleteEvent = handleAsync(async (req, res) => {
 export const UserRegisterEvent = handleAsync(async (req, res) => {
   try {
     const isExistTicket = await Event.findById(req.body.id_event);
-    const isExistUser = await User.findById(req.body.id_user);
+    const isExistUser = await User.findById(req.user.userId);
     if (!isExistTicket && !isExistUser) {
       return res.status(200).json({
         status: 404,

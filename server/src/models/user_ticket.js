@@ -8,7 +8,7 @@ const user_ticketSchema = new mongoose.Schema({
     },
     id_user: {
         type: String,
-        require: true
+        require: false
     },
     quantity: {
         type: Number,
