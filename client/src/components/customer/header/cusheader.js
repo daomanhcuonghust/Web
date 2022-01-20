@@ -3,18 +3,23 @@ import { NavLink,Link, useNavigate } from 'react-router-dom';
 import './cusheader.css';
 
 export default function CustomerHeader() {
+  const [nameUser, setNameUser] = useState("");
   const [login, setLogin] = useState(false);
-
+  
   useEffect(() => {
-      let lg=localStorage.getItem("isLogin");
-      if(lg!==null) setLogin(true);
+      let accessToken=localStorage.getItem("accessToken");
+      if(accessToken){
+        setLogin(true);
+        setNameUser(localStorage.getItem("nameUser"));
+      } 
       else setLogin(false);
-  },[localStorage.getItem("isLogin")])
+  },[localStorage.getItem("accessToken")])
 
   let navi=useNavigate();
 
   const handleLogout=()=>{
-    localStorage.removeItem("isLogin");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("nameUser");
     navi("/user/home");
   }
 
@@ -43,7 +48,7 @@ export default function CustomerHeader() {
                 login
                 ?
                 <div className='drop'>
-                  <button className="nut_dropdown">alo</button>
+                  <button className="nut_dropdown">{nameUser}</button>
                   <div className='noidung_dropdown'>
                     <div onClick={()=>navi("/user/profile")}>Profile</div>
                     <div onClick={()=>navi("/user/VIPRegister")}>Đăng ký VIP</div>

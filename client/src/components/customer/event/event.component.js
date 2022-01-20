@@ -1,41 +1,67 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel, Badge, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
-
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function Event() {
+    const [event, setEvent] = useState({});
+    const [login, setLogin] = useState(false);
+    let { eventid } = useParams();
+    let navi=useNavigate();
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/api/v1/event/${eventid}`, {
+            method: 'GET', // or 'PUT'
+        })
+        .then(response => response.json())
+        .then(data => {
+            setEvent(data.result);
+        })
+        .catch((error) => {
+            alert("eror");
+        })
+    }, []);
+
+    useEffect(() => {
+          let accessToken=localStorage.getItem("accessToken");
+          if(accessToken){
+            setLogin(true);
+          } 
+          else setLogin(false); 
+      },[localStorage.getItem("accessToken")])
+
+    const handleSubmit =()=>{
+        if(!login){
+            navi("/login");
+        }else{
+            //callapi
+        }
+    }
+    
     return (
             <div className="inner2">
             <form>
-                <h3>Lưu Niệm Đá Chàm <Badge variant="secondary">On sale</Badge></h3>
+                <h3>{event.name}</h3>
                 <hr size="1"  color="gray"/>  
-                <p>20 khu mua sắm với hơn 2.000 mặt hàng phong phú, phân bổ khắp Sun World Ba Na Hills như nhà ga, khu Trưng bày Tượng sáp, nhà hàng Doumer, Fantasy Park, các nhà ga đến… Đặc biệt, khu mua sắm đẳng cấp tại Làng Pháp với đủ lĩnh vực từ thời trang, mỹ phẩm, trang sức, túi xách, đồ lưu niệm…sẽ mang đến cho du khách nhiều sự lựa chọn và trải nghiệm mua sắm thời thượng trong không gian vô cùng ấn tượng.</p>
+                <p>{event.description}</p>
                 <Carousel>
                     <Carousel.Item>
                         <img
                         className="d-block w-100"
-                        src="https://banahills.sunworld.vn/wp-content/uploads/2018/08/e.jpg"
+                        src={event.image}
                         alt="First slide"
                     />
-                        {/* <Carousel.Caption>
-                            <h3>First slide label</h3>
-                            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                        </Carousel.Caption> */}
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
                         className="d-block w-100"
-                        src="https://banahills.sunworld.vn/wp-content/uploads/2018/08/e4.jpg"
+                        src={event.image}
                         alt="Second slide"
                         />
-                        {/* <Carousel.Caption>
-                            <h3>Second slide label</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </Carousel.Caption> */}
                     </Carousel.Item>
                     <Carousel.Item>
                         <img
                         className="d-block w-100"
-                        src="https://res.klook.com/image/upload/v1618816502/blog/r8hwluurwkv1cyp1wtgv.webp"
+                        src={event.image}
                         alt="Third slide"
                         />
                         {/* <Carousel.Caption>
@@ -45,12 +71,21 @@ export default function Event() {
                     </Carousel.Item>
                 </Carousel>
                 <br/>
+                <p style={{fontSize:"15px"}}>Thời gian bắt đầu: {event.time_start}</p>
+                <p style={{fontSize:"15px"}}>Thời gian kết thúc: {event.time_end}</p>
+                <br/>
+                <p style={{fontSize:"18px",color:"green"}}>Khuyến mãi: {event.discount}%</p>
    
                 <ButtonToolbar className="justify-content-between" aria-label="Toolbar with Button groups">
                     <ButtonGroup/>
                     <ButtonGroup> 
-                        <button type="submit" className="btn btn-primary btn-lg" aria-describedby="btnGroupAddon2">
-                            Buy ticket now
+                        <button 
+                            type="submit" 
+                            className="btn btn-primary btn-lg" 
+                            aria-describedby="btnGroupAddon2"
+                            onClick={()=>handleSubmit()}
+                        >
+                            Tham gia sự kiện
                         </button> 
                     </ButtonGroup>
                 </ButtonToolbar>

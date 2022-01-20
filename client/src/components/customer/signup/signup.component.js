@@ -1,5 +1,6 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom"
+import axios from "axios";
 
 export default function SignUp() {
 
@@ -10,8 +11,31 @@ export default function SignUp() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const handleRegister=()=>{
-        
+    let navi=useNavigate();
+
+    const handleRegister=async (e)=>{
+        e.preventDefault();
+        const data={
+            phoneNumber:nbphone,
+            email,
+            password,
+            firstName:firstname,
+            lastName:lastname
+        }
+        if(password===confirmPassword){
+            try{
+                const res=await axios.post("http://localhost:5000/api/v1/signup",data);
+                console.log(res);
+                if(res.data.succes){
+                    localStorage.setItem("accessToken",res.data.accessToken);
+                    localStorage.setItem("nameUser",res.data.data.firstName+' '+res.data.data.lastName);
+                    navi("/user");
+                }
+            }catch(err){
+                alert("err");
+            }
+        }
+       
     }
 
     return (
@@ -82,7 +106,7 @@ export default function SignUp() {
                         <button 
                             type="submit" 
                             className="btn btn-dark btn-lg btn-block"
-                            onClick={()=>handleRegister()}
+                            onClick={(e)=>handleRegister(e)}
                         >
                             Register
                         </button>

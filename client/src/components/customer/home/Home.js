@@ -4,20 +4,36 @@ import {Carousel,Row,Card,Button} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
 export default function Home() {
+    const [lastEvent, setLastEvent] = useState([])
     const [login, setLogin] = useState(false)
 
     let navi=useNavigate();
     
-    const handleEvent=()=>{
-        if(!login) navi("/login");
-        else navi("/user/event/ad");
+    const handleEvent=(id)=>{
+        navi(`/user/event/${id}`);
     }
 
     useEffect(() => {
-        let lg=localStorage.getItem("isLogin");
-        if(lg!==null) setLogin(true);
-        else setLogin(false);
-    }, [])
+          let accessToken=localStorage.getItem("accessToken");
+          if(accessToken){
+            setLogin(true);
+          } 
+          else setLogin(false);  
+      },[localStorage.getItem("accessToken")])
+
+    useEffect(() => {
+        fetch('http://localhost:5000/api/v1/latestEvents', {
+                    method: 'GET', // or 'PUT'
+                    }
+            )
+            .then(response => response.json())
+           .then(data => {
+                setLastEvent(data.result);
+            })
+            .catch((error) => {
+                alert("eror");
+            }) 
+      }, []);
 
     return (
             <div className='home_ctn'>
@@ -43,47 +59,25 @@ export default function Home() {
             </Carousel>
             </div>
             <Row>
-                <Card className='ev'>
-                    <div className='img'>
-                        <Card.Img variant="top" src="" />
-                    </div>                  
-                        <Card.Body>
-                            <Card.Title>Sự kiện 1</Card.Title>
+                {
+                    lastEvent.map(evnt=>
+                        <Card className='ev'>
+                            <Card.Img variant="top" src={evnt.image}  height="300"/>          
+                            <Card.Body>
+                                <Card.Title>{evnt.name}</Card.Title>
                                 <Card.Text>
-                                    mô tả
+                                    {evnt.description}
                                 </Card.Text>
                             <Button 
                                 variant="primary"
-                                onClick={()=>handleEvent()}
+                                onClick={()=>handleEvent(evnt._id)}
                             >
                                 Xem thêm
                             </Button>
                         </Card.Body>
-                </Card>
-                <Card className='ev'>
-                    <div className='img'>
-                        <Card.Img variant="top" src="" />
-                    </div>                  
-                        <Card.Body>
-                            <Card.Title>Sự kiện 1</Card.Title>
-                                <Card.Text>
-                                    mô tả
-                                </Card.Text>
-                            <Button variant="primary">Đặt vé</Button>
-                        </Card.Body>
-                </Card>
-                <Card className='ev'>
-                    <div className='img'>
-                        <Card.Img variant="top" src="" />
-                    </div>                  
-                        <Card.Body>
-                            <Card.Title>Sự kiện 1</Card.Title>
-                                <Card.Text>
-                                    mô tả
-                                </Card.Text>
-                            <Button variant="primary">Đặt vé</Button>
-                        </Card.Body>
-                </Card>
+                        </Card>
+                    )
+                }
             </Row>
             <div className="home_container">  
                 <div className="news_event">

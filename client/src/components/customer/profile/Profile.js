@@ -23,7 +23,8 @@ export default function Profile() {
     }
     
     const logout = ()=>{
-        localStorage.removeItem("isLogin");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("nameUser");
         navi("/user/home");
     }
     

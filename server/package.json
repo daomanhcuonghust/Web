@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start":"nodemon --experimental-modules ./index.js",
+    "start": "nodemon --experimental-modules ./index.js",
     "dev": "nodemon src/index.js --exec \"node -r dotenv/config --experimental-specifier-resolution=node\""
   },
   "author": "dsc hust",
@@ -23,6 +23,6 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.15"
   }
 }

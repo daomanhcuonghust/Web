@@ -11,13 +11,28 @@ export const getUSer = handleAsync(async(req, res) => {
     });
 });
 
+// export const createUser = handleAsync(async(req, res) => {
+//     const user = await UserService.create(req.body);
+//     const accessToken = jwt.sign(
+//         user._id,
+//         JWT_SECRET
+//       );
+//     res.json({
+//         data: user,
+//         accessToken:accessToken
+//     });
+// })
 export const createUser = handleAsync(async(req, res) => {
     const user = await UserService.create(req.body);
+    console.log(user);
     const accessToken = jwt.sign(
-        user._id,
+        {
+            userId:user._id
+        },
         JWT_SECRET
       );
     res.json({
+        succes:true,
         data: user,
         accessToken:accessToken
     });
