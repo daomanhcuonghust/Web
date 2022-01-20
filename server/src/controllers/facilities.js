@@ -1,6 +1,19 @@
 import { Facilities } from "../models"
 import { handleAsync } from "../utils"
 
+export const getFacilities = handleAsync(async (req, res) => {
+  const data = await Facilities.find()
+  if (!data) {
+    return res.json({
+      message: "Tra cứu CSVC thất bại",
+      cause: "Không có CSVC được ghi nhận trong hệ thống",
+    })
+  }
+  res.json({
+    result: data,
+  })
+})
+
 export const createFacilities = handleAsync(async (req, res) => {
   try {
     const data = new Facilities(req.body)
