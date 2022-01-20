@@ -1,4 +1,5 @@
 import Joi from "joi"
+import { Staff } from "../models"
 
 const phoneNumber = Joi.string().min(10).max(11).required()
 const email = Joi.string().min(1).max(50)
@@ -8,6 +9,7 @@ const lastName = Joi.string().min(1).max(20).required()
 const role = Joi.number().required()
 const salary = Joi.number().required()
 const time_checkout = Joi.date().required()
+const staff_code = Joi.string().lowercase().required()
 
 export const createLogin = Joi.object({
   phoneNumber,
@@ -23,6 +25,7 @@ export const signupInput = Joi.object({
 })
 
 export const signupInputStaff = Joi.object({
+  staff_code,
   phoneNumber,
   email,
   password,

@@ -37,6 +37,7 @@ import {
   getIncome,
   getPersonalInfo,
   personalUpdateUser,
+  getFacilities,
 } from "../controllers"
 import {
   validateLogin,
@@ -69,8 +70,9 @@ router.get("/ticket/user/:userId", userTicket)
 
 router.put("/typeTicket/:id", createTypeTicket)
 router.put("/ticket/:id/:typeId", updateTypeTicket)
-router.post("/ticketIncome", validateViewIncome, getIncome)
+router.get("/ticketIncome", validateViewIncome, getIncome)
 
+router.get("/facilities", getFacilities)
 router.post("/facilities", createFacilities)
 router.patch("/facilities/:id", updateFacilities)
 router.post("/userEvent", UserRegisterEvent)
@@ -79,8 +81,7 @@ router.post("/Event", createEvent)
 
 router.get("/event/user/:id", participantsEvent)
 
-router.get("/staffs", getStaff)
-router.post("/staffs", createStaff)
+router.get("/staff", getStaff)
 router.patch("/staff/:id", updateStaff)
 router.delete("/staff/:id", deleteStaff)
 

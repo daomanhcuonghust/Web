@@ -136,32 +136,30 @@ export const deleteTicket = handleAsync(async (req, res) => {
 //delete type ticket
 export const deleteTypeTickte = async (req, res, next) => {
   try {
-     await Ticket.findByIdAndUpdate(
+    await Ticket.findByIdAndUpdate(
       {
-         _id: req.params.id
+        _id: req.params.id,
       },
-      { $pull: { "type": {_id:req.params.typeId} } }
-    );
-
-    
+      { $pull: { type: { _id: req.params.typeId } } }
+    )
 
     res
       .status(200)
-      .json({ success: true, message: "Delete type ticket success" });
+      .json({ success: true, message: "Delete type ticket success" })
   } catch (error) {
     res.json({
       message: "Có lỗi xảy ra",
       error: error.message,
-    });
+    })
   }
-};
+}
 
 export const UserBuyTicket = handleAsync(async (req, res) => {
   try {
     const isExistTicket = await Ticket.find({
       type: { $elemMatch: { _id: req.body.id_ticket } },
-    });
-    const isExistUser = await User.findById(req.body.id_user);
+    })
+    const isExistUser = await User.findById(req.body.id_user)
 
     if (!isExistTicket && !isExistUser) {
       return res.status(200).json({
@@ -170,8 +168,8 @@ export const UserBuyTicket = handleAsync(async (req, res) => {
       })
     }
 
-    const data = new User_ticket(req.body);
-    await data.save();
+    const data = new User_ticket(req.body)
+    await data.save()
 
     res.json({
       message: "Mua vé thành công",
@@ -183,64 +181,61 @@ export const UserBuyTicket = handleAsync(async (req, res) => {
       error,
     })
   }
-
-});
+})
 
 //Get user's ticket information
 export const userTicket = async (req, res, next) => {
-  const userId = req.params.userId;
+  const userId = req.params.userId
   try {
     const data = await User_ticket.find({
       id_user: userId,
-    });
+    })
 
     const idTicket = data.map((item, index) => {
-      return item.id_ticket;
-    });
+      return item.id_ticket
+    })
 
     const tickets = await Ticket.find(
       {
         type: { $elemMatch: { _id: { $in: idTicket } } },
       },
       "type"
-    );
+    )
 
-    const listTick = [];
+    const listTick = []
     tickets.map((item, index) => {
       item.type.map((ticket, index) => {
-        listTick.push(ticket);
-      });
-    });
+        listTick.push(ticket)
+      })
+    })
 
-    const result = [];
+    const result = []
 
     data.map((item, index) => {
       listTick.map((ticket, index) => {
         if (ticket._id == item.id_ticket) {
-          const { updatedAt, ...other } = item._doc;
+          const { updatedAt, ...other } = item._doc
           result.push({
             ...other,
             nameTicket: ticket.nameTicket,
             priceTicket: ticket.price,
-          });
+          })
         }
-      });
-    });
+      })
+    })
 
     res.status(200).json({
       success: true,
       message: "Get user's ticket success",
       result: result,
-    });
+    })
   } catch (error) {
     res.json({
       message: "Có lỗi xảy ra",
       error,
-    });
+    })
   }
-};
-
-
+}
 
 export const getIncome = handleAsync(async (req, res) => {
   try {
@@ -258,4 +253,3 @@ export const getIncome = handleAsync(async (req, res) => {
     })
   }
 })
-

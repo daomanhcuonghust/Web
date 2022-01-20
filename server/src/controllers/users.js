@@ -82,7 +82,6 @@ export const personalUpdateUser = handleAsync(async (req, res) => {
   try {
     const data = await User.findByIdAndUpdate(req.params.id, {
       phoneNumber: req.body.phoneNumber,
-      password: req.body.password,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
@@ -93,9 +92,10 @@ export const personalUpdateUser = handleAsync(async (req, res) => {
         cause: "Khách hàng không tồn tại",
       })
     }
+    const newdata = await User.findById(req.params.id)
     res.json({
       message: "Cập nhật thành công",
-      data,
+      newdata,
     })
   } catch (error) {
     res.json({
