@@ -159,7 +159,7 @@ export const UserBuyTicket = handleAsync(async (req, res) => {
     const isExistTicket = await Ticket.find({
       type: { $elemMatch: { _id: req.body.id_ticket } },
     })
-    const isExistUser = await User.findById(req.body.id_user)
+    const isExistUser = await User.findById(req.user.userId)
 
     if (!isExistTicket && !isExistUser) {
       return res.status(200).json({

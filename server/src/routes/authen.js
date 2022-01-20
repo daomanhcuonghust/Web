@@ -38,6 +38,7 @@ import {
   getPersonalInfo,
   personalUpdateUser,
   getFacilities,
+  userJoinEvents,
 } from "../controllers"
 import {
   validateLogin,
@@ -75,7 +76,7 @@ router.get("/ticketIncome", validateViewIncome, getIncome)
 router.get("/facilities", getFacilities)
 router.post("/facilities", createFacilities)
 router.patch("/facilities/:id", updateFacilities)
-router.post("/userEvent", UserRegisterEvent)
+router.post("/userEvent", signedIn, UserRegisterEvent)
 router.delete("/facilities/:id", deleteFacilities)
 router.post("/Event", createEvent)
 
@@ -87,6 +88,7 @@ router.delete("/staff/:id", deleteStaff)
 
 router.get("/users", getUSer)
 router.post("/users", createUser)
+router.get("/user/event", signedIn, userJoinEvents)
 router.patch("/users/:id", updateUser)
 router.delete("/users/:id", deleteUser)
 
@@ -96,7 +98,7 @@ router.delete("/Event/:id", deleteEvent)
 router.get("/latestEvents", latestEvents)
 router.get("/allEvent", getAllEvent)
 
-router.post("/user-buy-ticket", UserBuyTicket)
+router.post("/user-buy-ticket", signedIn, UserBuyTicket)
 router.post("/ticket-vip", signedIn, createVipTicket)
 
 router.put("/staff/checkin", signedIn, checkInTicket)

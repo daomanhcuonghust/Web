@@ -47,14 +47,13 @@ export const signedIn = async (req, res, next) => {
   const token = authHeader && authHeader.split(" ")[1]
 
   if (token == null) {
-    return res.error({ msg: "UNAUTHORIZED" }, 401)
+    return res.status(500).json({ msg: "UNAUTHORIZED" })
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      return res.error({ msg: "UNAUTHORIZED" }, 401)
+      return res.status(500).json({ msg: "UNAUTHORIZED" })
     }
-
     req.user = user
     next()
   })

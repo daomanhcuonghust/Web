@@ -1,4 +1,4 @@
-import { User, User_ticket } from "../models"
+import { User, User_ticket, Event, User_event } from "../models"
 import { handleAsync } from "../utils"
 
 export const updateUser = handleAsync(async (req, res) => {
@@ -52,7 +52,6 @@ export const deleteUser = handleAsync(async (req, res) => {
 
 export const getPersonalInfo = async (req, res, next) => {
   const idUser = req.params.id
-
   try {
     const userinfo = await User.findById(idUser)
     const userticket = await User_ticket.find({ id_user: idUser })
@@ -104,3 +103,23 @@ export const personalUpdateUser = handleAsync(async (req, res) => {
     })
   }
 })
+
+//events that users participate in
+export const userJoinEvents = async (req, res, next) => {
+  try {
+    const userId = req.user.userId
+    const participants = await User_event.find({ id_user: userId })
+
+    const Idevents = participants.map((item, index) => item.id_event)
+
+    const events = await Event.find({ _id: { $in: Idevents } })
+
+    res.status(200).json({
+      success: true,
+      message: "Information of event participants",
+      result: events,
+    })
+  } catch (error) {
+    res.status(500).json({ success: false, message: "INTERNAL SERVER ERROR" })
+  }
+}
