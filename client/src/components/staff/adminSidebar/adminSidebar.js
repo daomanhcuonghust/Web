@@ -4,8 +4,10 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import { Link } from 'react-router-dom';
 
 
+
 const AdminSidebar = () => {
         return (
+          <div className='adminsb'>
           <ProSidebar>
             <SidebarHeader>
               <h4 style={{textAlign: "center"}} >Tinker Bell Garden</h4>
@@ -15,23 +17,23 @@ const AdminSidebar = () => {
               <Menu iconShape="square">
                 <MenuItem >
                   Xem doanh thu 
-                  <Link to="/manager/xemdoanhthu" />  
+                  <Link to="xemdoanhthu" />  
                 </MenuItem>
                 <SubMenu title="Quản lý khu vui chơi" >
                   <MenuItem>Component 1</MenuItem>
                   <MenuItem>Component 2</MenuItem>
                 </SubMenu>
                 <SubMenu title="Quản lý sự kiện" >
-                  <MenuItem>Component 1</MenuItem>
-                  <MenuItem>Component 2</MenuItem>
+                  <MenuItem>Danh sách sự kiện <Link to="quanlysk" /></MenuItem>
+                  <MenuItem>Thêm sự kiện<Link to="themsk" /></MenuItem>
                 </SubMenu>
                 <SubMenu title="Quản lý khách hàng" >
                   <MenuItem>Component 1</MenuItem>
                   <MenuItem>Component 2</MenuItem>
                 </SubMenu>
                 <SubMenu title="Quản lý nhân viên" >
-                  <MenuItem>Component 1</MenuItem>
-                  <MenuItem>Component 2</MenuItem>
+                  <MenuItem>Danh sách nhân viên<Link to="quanlynv" /></MenuItem>
+                  <MenuItem>Thêm nhân viên<Link to="themnv" /></MenuItem>
                 </SubMenu>
               </Menu>
             </SidebarContent>
@@ -44,7 +46,7 @@ const AdminSidebar = () => {
               </Menu>
             </SidebarFooter>
           </ProSidebar>
-               
+          </div>
         );
     }
 

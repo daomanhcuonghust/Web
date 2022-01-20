@@ -11,8 +11,18 @@ export default class VIPRegister extends Component {
                     <Container>                        
                         <Row>
                             <Col>
-                                <h3> </h3>
-                                <label>Chỗ này liệt kê quyền VIP các thứ các thứ</label>
+                                <form>
+                                    <h3> Quyền lợi của thành viên VIP </h3>
+                                    <label>- Giảm giá vé lên đến 20% cho 1 bé/ 1 lượt chơi</label>
+                                    <label>- Không giới hạn số lượng vé</label>
+                                    <div className="alert alert-success" role="alert">
+                                        <h4 className="alert-heading">Đăng kí ngay!</h4>
+                                        <hr/>
+                                        <label>Tham gia để có những trải nghiệm tốt nhất tại</label>
+                                        
+                                        <h4>Tinker Bell Garden</h4>
+                                    </div>
+                                </form>
                             
                             </Col>
                             <Col>

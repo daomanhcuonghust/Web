@@ -1,98 +1,92 @@
-import React, { Component } from 'react';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import BootstrapTable from 'react-bootstrap-table-next';
-import cellEditFactory from 'react-bootstrap-table2-editor';
-import filterFactory, { textFilter, numberFilter   } from 'react-bootstrap-table2-filter';
+import React ,{ useState} from 'react';
+import { Table, Button } from 'react-bootstrap';
+import { AiOutlineDelete } from 'react-icons/ai';
+import {BsPen} from 'react-icons/bs'
 
+export default function StaffManage(){
+  const deleteRow=() =>{
 
-class StaffManage extends Component {
-  state = {
-    
-    products: [
-      {
-        id: 'nv1',
-        name: 'Elon',
-        chucvu: 'nv quầy',
-        luong: 5000000,
-        tksdt: '0123456',
-        mk: 'blabla'
-      },
-      {
-        id: 'nv2',
-        name: 'Elon',
-        chucvu: 'nv quầy',
-        luong: 6000000,
-        tksdt: '0123456',
-        mk: 'blabla'
-      },
-      {
-        id: 'nv3',
-        name: 'Elon',
-        chucvu: 'nv quầy',
-        luong: 7000000,
-        tksdt: '0123456',
-        mk: 'blabla'
-      }
-    ],
-    columns: [{
-      dataField: 'id',
-      text: 'Product ID',
-      filter: textFilter(),
-      sort: true
-    },
-    {
-      dataField: 'name',
-      text: 'Tên nhân viên',
-      filter: textFilter()
-    }, {
-      dataField: 'chucvu',
-      text: 'Chức vụ',
-      filter: textFilter()
-    },
-    {
-      dataField: 'luong',
-      text: 'Lương',
-      filter: numberFilter()
-    },
-    {
-      dataField: 'tksdt',
-      text: 'Tài khoản',
-      filter: textFilter()
-    },
-    {
-      dataField: 'mk',
-      text: 'Mật Khẩu',
-      filter: textFilter()
-    },
-  ],
-  selectRow : {
-    mode: 'checkbox',
-    clickToSelect: true
   }
-  } 
-  
-  render() {
-    return (
-      <div className="container" style={{ marginTop: 50  }}>
-        <button type="button" className="btn btn-success" style={{marginRight : "10px", marginBottom : "10px"}}>Thêm</button>
-        <button type="button" className="btn btn-danger" style={{marginRight : "10px", marginBottom : "10px"}}>Xóa</button>
+  const changeRow=() =>{
 
-        <BootstrapTable 
-        striped
-        hover
-        keyField='id' 
-        data={ this.state.products } 
-        columns={ this.state.columns } 
-        cellEdit={ cellEditFactory({
-          mode: 'click',
-          blurToSave: true
-        }) }
-        filter={ filterFactory() }
-        selectRow={ this.state.selectRow }
-        />
-      </div>
-    );
   }
+  return(
+    <div className='db'>
+     
+      <h3>Bảng quản lý nhân viên</h3>
+      <Table striped bordered >
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Mã nhân viên</th>
+            <th>Họ và tên</th>
+            <th>Chức vụ</th>
+            <th>Lương</th>
+            <th>Tài khoản</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>nv1</td>
+            <td>Otto</td>
+            <td>Quản lý</td>
+            <td>30.000.000</td>
+            <td>admin123</td>
+            <td className="text-center" >
+              <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>changeRow()} href="suanv">
+                <BsPen/>
+              </Button>
+            </td>
+            <td className="text-center" >
+              
+              <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow()}>
+                <AiOutlineDelete />
+              </Button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>nv2</td>
+            <td>Mark</td>
+            <td>Nhân viên quầy</td>
+            <td>5.000.000</td>
+            <td>blabla</td>
+            <td className="text-center" >
+              <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>changeRow()} href="suanv">
+                <BsPen/>
+              </Button>
+            </td>
+            <td className="text-center" >
+              
+              <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow()}>
+                <AiOutlineDelete />
+              </Button>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>nv3</td>
+            <td>Jeff</td>
+            <td>Nhân viên lễ tân</td>
+            <td>5.000.000</td>
+            <td>usename123</td>
+            <td className="text-center" >
+              <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>changeRow()} href="suanv">
+                <BsPen/>
+              </Button>
+            </td>
+            <td className="text-center" >
+              
+              <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow()}>
+                <AiOutlineDelete />
+              </Button>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+    </div>
+  )
+
 }
-
-export default StaffManage;

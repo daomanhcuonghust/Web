@@ -1,0 +1,10 @@
+.em .av{
+    height: 80vh;
+  }
+  
+.em {
+   position: relative;
+   width: 100%;
+   padding: 25px 50px 25px 50px;  
+   overflow-y: scroll;
+}

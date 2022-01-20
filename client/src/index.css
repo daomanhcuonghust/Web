@@ -159,4 +159,8 @@ body, html, .App, #root, .outer {
   height: 80vh;
 }
 
-
+.db {
+  position: relative;
+  width: 100%;
+  padding: 25px 50px 25px 50px;  
+}
