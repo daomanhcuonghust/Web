@@ -2,12 +2,12 @@ import mongoose from "mongoose"
 import validator from "validator"
 import bcrypt from "bcrypt"
 const StaffSchema = new mongoose.Schema({
-  staff_code: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-  },
+  // staff_code: {
+  //   type: String,
+  //   required: true,
+  //   unique: true,
+  //   lowercase: true,
+  // },
   phoneNumber: {
     type: String,
     required: true,

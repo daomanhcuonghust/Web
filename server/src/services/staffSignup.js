@@ -5,7 +5,7 @@ export const getAll = async () => {
 
 export const create = async (data) => {
   const {
-    staff_code,
+    // staff_code,
     phoneNumber,
     email,
     password,
@@ -15,7 +15,7 @@ export const create = async (data) => {
     salary,
   } = data
   const user = new Staff({
-    staff_code,
+    // staff_code,
     phoneNumber,
     email,
     password,

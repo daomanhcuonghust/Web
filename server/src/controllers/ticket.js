@@ -241,7 +241,10 @@ export const getIncome = handleAsync(async (req, res) => {
   try {
     const query = await User_ticket.find({
       is_paid: true,
-      time_checkout: req.body.time_checkout,
+      time_checkout: {
+        $gte: req.body.time_from,
+        $lte: req.body.time_to,
+      },
     })
     res.json({
       data: query,
