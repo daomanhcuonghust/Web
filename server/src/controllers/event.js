@@ -6,6 +6,7 @@ export const createEvent = handleAsync(async (req, res) => {
     const data = new Event(req.body);
     await data.save();
     res.json({
+      success:true,
       message: "Tạo sự kiện thành công",
       data,
     });

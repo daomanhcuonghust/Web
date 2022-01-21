@@ -39,7 +39,6 @@ export default function EventManage() {
             alert("error")
           }
     }
-    
         return (
             <div className="em">
                 <div className="eventList">

@@ -16,7 +16,6 @@ export default function AddEvent() {
 
     const handleSubmit=async (e)=>{
         e.preventDefault();
-        console.log(phoneNumber&&firstName&&lastName&&role)
 
         if(phoneNumber&&firstName&&lastName&&(role+1)&&email&&(salary+100)&&password){
             try{
