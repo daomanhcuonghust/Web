@@ -1,5 +1,4 @@
-
-import React, {  useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import './Profile.css';
 import image from './nobi.jpg'
 import { useNavigate } from 'react-router-dom';
@@ -10,12 +9,16 @@ export default function Profile() {
         lastName: 'kirama',
         phoneNumber: '0123456',
         email: '123@gmail',
-        bonus: '100',
         VIPdate: '15/06/2001'
     });
     const [edit, setEdit] = useState(false);
 
     let navi=useNavigate();
+
+    useEffect(() => {
+      
+    }, []);
+    
 
     const handleUpdate=()=>{
         //callapi

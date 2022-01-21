@@ -16,7 +16,6 @@ export default function AddEvent() {
 
     const handleSubmit=async (e)=>{
         e.preventDefault();
-
         if(phoneNumber&&firstName&&lastName&&(role+1)&&email&&(salary+100)&&password){
             try{
                 const res=await axios.post("http://localhost:5000/api/v1/signup-staff",
@@ -33,7 +32,7 @@ export default function AddEvent() {
                 console.log(res);
                 if(res.status==200){
                     alert("tao thanh cong");
-                    document.getElementById("form").reset();
+                    navi("/manager/quanlynv")
                 } 
             }catch(error){
                 alert("tao that bai")

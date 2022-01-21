@@ -31,9 +31,10 @@ export default function EventManage() {
             const res=await axios.delete(`http://localhost:5000/api/v1/event/${id}`)
             console.log(res);
             if(res.data.success){
-              const newdata=listEvent.filter(ev=>ev._id!==id);
-              setListEvent(newdata);
-              alert("xoa thanh cong");
+                
+                const newdata=listEvent.filter(ev=>ev._id!==id);
+                setListEvent(newdata); 
+                alert("xoa thanh cong");
             }
           }catch(err){
             alert("error")

@@ -158,8 +158,8 @@ export const UserBuyTicket = handleAsync(async (req, res) => {
   try {
     const isExistTicket = await Ticket.find({
       type: { $elemMatch: { _id: req.body.id_ticket } },
-    })
-    const isExistUser = await User.findById(req.user.userId)
+    });
+    const isExistUser = await User.findById(req.user.userId);
 
     if (!isExistTicket && !isExistUser) {
       return res.status(200).json({
@@ -168,10 +168,13 @@ export const UserBuyTicket = handleAsync(async (req, res) => {
       })
     }
 
-    const data = new User_ticket(req.body)
-    await data.save()
+    const ticket={...req.body,id_user:req.user.userId}
+
+    const data = new User_ticket(ticket);
+    await data.save();
 
     res.json({
+      success:true,
       message: "Mua vé thành công",
       data,
     })
@@ -181,7 +184,8 @@ export const UserBuyTicket = handleAsync(async (req, res) => {
       error,
     })
   }
-})
+
+});
 
 //Get user's ticket information
 export const userTicket = async (req, res, next) => {

@@ -35,8 +35,9 @@ export default function StaffManage(){
         const res=await axios.delete(`http://localhost:5000/api/v1/staff/${id}`)
         console.log(res);
         if(res.data.success){
+          
           const newdata=data.filter(nv=>nv._id!==id);
-          setData(newdata);
+          setData(newdata); 
           alert("xoa thanh cong");
         }
       }catch(err){

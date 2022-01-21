@@ -28,6 +28,7 @@ export const updateStaff = handleAsync(async (req, res) => {
     }
     const newdata = await Staff.findById(req.params.id)
     res.json({
+      success:true,
       message: "Cập nhật thành công",
       newdata,
     })
@@ -69,6 +70,7 @@ export const deleteStaff = handleAsync(async (req, res) => {
       })
     }
     res.json({
+      success:true,
       message: "Xóa nhân viên thành công",
     })
   } catch (error) {

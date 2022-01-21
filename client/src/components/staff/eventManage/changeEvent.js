@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState,useEffect}  from "react";
 import {Form, Col, Row, InputGroup, FormControl} from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 export default function ChangeEvent() {
@@ -16,6 +16,7 @@ export default function ChangeEvent() {
     const [image3, setImage3] = useState("");
 
     let { idsk }=useParams();
+    let navi=useNavigate();
 
     useEffect(() => {
         async function fetchev(){
@@ -36,7 +37,8 @@ export default function ChangeEvent() {
       }, []);
 
       const handleSubmit = async (e)=>{
-        if(name&&time_start&&time_end&&description&&detail&&discount&&image1&&image2&&image3){
+        e.preventDefault();
+        if(name&&time_start&&time_end&&description&&detail&&(discount+10)&&image1&&image2&&image3){
             try{
                 let res=await axios.patch(`http://localhost:5000/api/v1/event/${idsk}`,
                     {
@@ -51,14 +53,14 @@ export default function ChangeEvent() {
                         description,
                         detail,
                         discount
-
                     })
                 console.log(res);
-                // if(res.data.success){
-                //     alert("tao su kien thanh cong")
-                // }else{
-                //     alert("tao su kien that bai")
-                // }
+                if(res.data.success){
+                    alert("tao su kien thanh cong")
+                    navi("/manager/quanlysk")
+                }else{
+                    alert("tao su kien that bai")
+                }
             }catch(err){
                 alert("err")
             }
@@ -66,6 +68,7 @@ export default function ChangeEvent() {
             alert("thieu thong tin kia bro")
         }
       }
+
 
         return (
             <div className="db">

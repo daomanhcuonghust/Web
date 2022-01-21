@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState}  from "react";
 import {Form, Col, Row, InputGroup, FormControl} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function AddEvent() {
     const [name, setName] = useState("");
@@ -12,6 +13,8 @@ export default function AddEvent() {
     const [image1, setImage1] = useState("");
     const [image2, setImage2] = useState("");
     const [image3, setImage3] = useState("");
+
+    let navi=useNavigate();
 
     const handleSubmit=async (e)=>{
         e.preventDefault();
@@ -34,6 +37,7 @@ export default function AddEvent() {
                     })
                 if(res.data.success){
                     alert("tao su kien thanh cong")
+                    navi("/manager/quanlysk")
                 }else{
                     alert("tao su kien that bai")
                 }

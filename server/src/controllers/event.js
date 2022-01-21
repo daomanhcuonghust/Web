@@ -21,6 +21,11 @@ export const createEvent = handleAsync(async (req, res) => {
 export const updateEvent = handleAsync(async (req, res) => {
   try {
     const data = await Event.findByIdAndUpdate(req.params.id, {
+      time_start: req.body.time_start,
+      time_end: req.body.time_end,
+      description: req.body.description,
+      detail: req.body.detail,
+      discount: req.body.discount,
       image: req.body.image,
       name: req.body.name,
     });
@@ -31,6 +36,7 @@ export const updateEvent = handleAsync(async (req, res) => {
       });
     }
     res.json({
+      success:true,
       message: "Cập nhật thành công",
       data,
     });
@@ -73,13 +79,14 @@ export const UserRegisterEvent = handleAsync(async (req, res) => {
         message: "Vé hoặc người mua vé không tồn tại",
       });
     }
-
-    const data = new User_event(req.body);
-    const { description, image, ...event } = isExistTicket._doc;
+    const ev={...req.body,id_user:req.user.userId};
+    const data = new User_event(ev);
+    const { description, image,detail, ...event } = isExistTicket._doc;
     const { password, createdAt, email, ...users } = isExistUser._doc;
 
     await data.save();
     res.json({
+      success:true,
       message: "Mua vé thành công",
       data: { ...users, ...event },
     });

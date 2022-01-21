@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react"
 import {Form, Button,Col,Row} from "react-bootstrap"
+import axios from "axios"
 
 function TicketBooking() {
     const [listTicket, setListTicket] = useState([]);
     const [idTicket, setIdTicket] = useState("");
     const [quantity,setQuantity] = useState(1);
     const [demoP, setDemoP] = useState(0);
+    let accessToken=localStorage.getItem("accessToken");
     
     useEffect(() => {
-        fetch("http://localhost:5000/api/v1/ticket/61e833decf6c0959340548a5", {
-            method: 'GET', // or 'PUT'
+        fetch("http://localhost:5000/api/v1/ticket/61eaafd99cc06741fc0d4cda", {
+            method: 'GET',
         })
         .then(response => response.json())
         .then(data => {
@@ -29,8 +31,31 @@ function TicketBooking() {
         })
     }, [quantity,idTicket]);
     
-    const handleSubmit =()=>{
-        
+    const handleSubmit =async(e)=>{
+        e.preventDefault();
+        if(idTicket&&quantity){
+            const res=await axios.post("http://localhost:5000/api/v1/user-buy-ticket",
+                                        {
+                                            id_ticket:idTicket,
+                                            quantity,
+                                            is_paid:false        
+                                        } 
+                                        ,
+                                        {
+                                            headers:{
+                                                authorization: `Bearer ${accessToken}`
+                                            }
+                                        }
+                            )
+            console.log(res);
+            if(res.data.success){
+                alert("dat ve thanh cong")
+            }else{
+                alert("that bai")
+            }
+        }else{
+            alert("khong du thong tin")
+        }
     }
 
     return <div className="outer1">
@@ -66,7 +91,7 @@ function TicketBooking() {
             
             <Col>
             <p>Giá tiền dự kiến: {demoP} vnđ</p>
-                <Button type="submit" onClick={()=>handleSubmit()}>Đặt vé</Button>
+                <Button onClick={(e)=>handleSubmit(e)}>Đặt vé</Button>
             </Col>
             </Row>
         </div>

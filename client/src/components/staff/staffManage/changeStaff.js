@@ -1,24 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState}  from "react";
 import {Form, Col, Row, InputGroup, FormControl} from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function ChangeStaff() {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [role, setRole] = useState();
+    const [role, setRole] = useState(0);
     const [email, setEmail] = useState("");
     const [salary, setSalary] = useState(0);
     const [password, setPassword] = useState("");
 
-
+    let navi=useNavigate();
     let { idnv }=useParams();
 
+
     useEffect(() => {
-      async function fetchnv(){
+        const fetchnv = async ()=>{
         let datanv=await axios.get(`http://localhost:5000/api/v1/staff/${idnv}`);
         let data= datanv.data.data;
+        console.log(data)
         setFirstName(data.firstName);
         setLastName(data.lastName);
         setEmail(data.email);
@@ -28,11 +30,61 @@ export default function ChangeStaff() {
       }
       fetchnv();
     }, []);
-    
-
+    console.log(role);
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+      if(phoneNumber&&firstName&&lastName&&(role+1)&&email&&(salary+100)){
+          if(password){
+            try{
+                let res=await axios.patch(`http://localhost:5000/api/v1/staff/${idnv}`,
+                    {
+                      phoneNumber,
+                      password,
+                      firstName,
+                      lastName,
+                      email,
+                      role,
+                      salary
+                    })
+                
+                if(res.data.success){
+                    alert("sua thong tin thanh cong")
+                    navi("/manager/quanlynv")
+                }else{
+                    alert("su thong tin that bai")
+                }
+            }catch(err){
+                alert("err")
+            }
+          }else{
+            try{
+                let res=await axios.patch(`http://localhost:5000/api/v1/staff/${idnv}`,
+                    {
+                      phoneNumber,
+                      firstName,
+                      lastName,
+                      email,
+                      role,
+                      salary
+                    })
+                if(res.data.success){
+                    alert("sua thong tin thanh cong")
+                    navi("/manager/quanlynv")
+                }else{
+                    alert("su thong tin that bai")
+                }
+            }catch(err){
+                alert("err")
+            }
+          }
+          
+      }else{
+          alert("thieu thong tin kia bro")
+      }
+    }
         return (
             <div className="db">
-                <Form>
+                
                     <h3>Thay đổi thông tin nhân viên</h3>
                     <Form.Label>Họ nhân viên</Form.Label>
                     <InputGroup className="mb-3">
@@ -84,11 +136,21 @@ export default function ChangeStaff() {
                         onChange={e=>setPhoneNumber(e.target.value)}
                     />
                     </InputGroup>
+
+                    <Form.Label>Email</Form.Label>
+                    <InputGroup className="mb-3">
+                    <Form.Control
+                        required
+                        type="text"
+                        placeholder="Nhập email"
+                        value={email}
+                        onChange={e=>setEmail(e.target.value)}
+                    />
+                    </InputGroup>
                     
                     <label>Mật khẩu mới</label>
                     <InputGroup className="mb-3">
                         <FormControl
-                        required
                         type="text"
                         placeholder="Nhập mật khẩu"
                         defaultValue=""
@@ -98,8 +160,8 @@ export default function ChangeStaff() {
                     
                     
                
-                <button type="submit" style={{paddingTop : '10px'}} className="btn btn-dark btn-lg btn-block">Submit</button>
-                </Form>
+                <button onClick={e=>handleSubmit(e)} style={{paddingTop : '10px'}} className="btn btn-dark btn-lg btn-block">Submit</button>
+                
             
 
             </div>
