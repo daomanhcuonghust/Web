@@ -1,34 +1,85 @@
 import React, {  useEffect, useState } from 'react';
 import './Profile.css';
 import image from './nobi.jpg'
-import { useNavigate } from 'react-router-dom';
+import axios from "axios"
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Profile() {
-    const [info, setInfo] = useState({
-        firstName: 'nobita',
-        lastName: 'kirama',
-        phoneNumber: '0123456',
-        email: '123@gmail',
-        VIPdate: '15/06/2001'
-    });
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setlastName] = useState("");
+    const [phoneNumber, setphoneNumber] = useState("");
+    const [email, setemail] = useState("");
+    const [VIP, setVIP] = useState();
+    const [list, setlist] = useState([]);
+
     const [edit, setEdit] = useState(false);
 
     let navi=useNavigate();
+    let accessToken=localStorage.getItem("accessToken");
 
     useEffect(() => {
-      
+      fetchinfo();
     }, []);
     
+    const fetchinfo=async()=>{
+        try{
+        const res=await axios.get("http://localhost:5000/api/v1/userInfo",{
+            headers:{
+              authorization: `Bearer ${accessToken}`
+            }
+        })
+        console.log(res.data)
+        if(res.data.success){
+            setVIP(res.data.VIP);
+            setFirstName(res.data.info.firstName)
+            setlastName(res.data.info.lastName)
+            setphoneNumber(res.data.info.phoneNumber)
+            setemail(res.data.info.email)
+            if(res.data.tickets!=="Nothing")
+                setlist(res.data.tickets);
+        }
+        }catch(err){
+            alert("err");
+        }
+    }
 
-    const handleUpdate=()=>{
-        //callapi
+    const handleUpdate=async ()=>{
+        try{
+        const res=await axios.patch("http://localhost:5000/api/v1/userInfo",
+        {
+            firstName,
+            lastName,
+            phoneNumber,
+            email
+        },
+        {
+            headers:{
+              authorization: `Bearer ${accessToken}`
+            }
+        }
+        )
+        if(res.data.success){
+            alert("cập nhật thành công");
+        }else{
+            alert("cập nhật thất bại");
+        }
+        fetchinfo();
         setEdit(false);
+        }catch(err){
+            alert("err");
+        }
     }
     
     const logout = ()=>{
         localStorage.removeItem("accessToken");
         localStorage.removeItem("nameUser");
         navi("/user/home");
+    }
+
+    const tenve =(id)=>{
+        if(id==="61eab05b9cc06741fc0d4cdd") return "Vé 2h";
+        if(id==="61eab0739cc06741fc0d4ce0") return "Vé cả ngày";
+        return "Đăng kí VIP";
     }
     
     return (
@@ -43,47 +94,74 @@ export default function Profile() {
                     <div className='label'>
                         <p>Họ</p>
                     </div>
-                    <input value={info.firstName} onChange={e=>{setInfo({...info,firstName: e.target.value});setEdit(true)}}/>
+                    <input value={firstName} onChange={e=>{setFirstName(e.target.value);setEdit(true)}}/>
                     </div>
                     <div className='line'>
                     <div className='label'>
                         <p>Tên</p>
                     </div>
-                    <input value={info.lastName} onChange={e=>{setInfo({...info,lastName: e.target.value});setEdit(true)}}/>
+                    <input value={lastName} onChange={e=>{setlastName(e.target.value);setEdit(true)}}/>
                     </div>
                     <div className='line'>
                     <div className='label'>
                         <p>Số điện thoại</p>
                     </div>
-                    <input value={info.phoneNumber} onChange={e=>{setInfo({...info,phoneNumber: e.target.value});setEdit(true)}}/>
+                    <input value={phoneNumber} onChange={e=>{setphoneNumber(e.target.value);setEdit(true)}}/>
                     </div>
                     <div className='line'>
                     <div className='label'>
                         <p>Email</p>
                     </div>
-                    <input value={info.email} onChange={e=>{setInfo({...info,email: e.target.value});setEdit(true)}}/>
+                    <input value={email} onChange={e=>{setemail(e.target.value);setEdit(true)}}/>
                     </div>
                     <div className={`bt${edit?'':' hide'}`}>
-                        <button type='submit' onClick={()=>handleUpdate()}>Cập nhật</button>
+                        <button onClick={()=>handleUpdate()}>Cập nhật</button>
                     </div>
                     <div className='vip'>
-                        <p>VIP: {info.VIPdate}</p>
-                        <a href="/user/VIPregister">Gia hạn</a>
+                        <p>VIP: {VIP}</p>
+                        {
+                            (VIP==="NoVIP")
+                            ?
+                            <Link to="/user/VIPRegister">Đăng kí</Link>
+                            :
+                            <Link to="/user/VIPRegister">Gia hạn</Link>
+                        }
                     </div>
                 </div>
                 <div className='ticket'>
                     <h3>Vé đã đặt</h3>
                     <div className='all'>
-                        <div className='one'>
-                            <div className='inftk'>
-                                <p>Loại vé: </p>
-                                <p>Giá: </p>
-                                <p>12/11/2001</p>
-                            </div>
-                            <div className='state'>
-                                <p>State</p>
-                            </div>
-                        </div>
+                        {
+                            (list.length!=0)
+                            &&
+                            list.map((iteam,index)=>(
+                                <div key={index} className='one'>
+                                    <div className='inftk'>
+                                        <p>Loại vé: {tenve(iteam.id_ticket)}--Số lượng: {iteam.quantity}</p>
+                                        <p>Giá: {iteam.is_paid?iteam.price:"Đang chờ"}</p>
+                                        <p>Đặt vé lúc: {iteam.updatedAt}</p>
+                                        <p>Checkin lúc: {iteam.time_checkin?iteam.time_checkin:"Đang chờ"}</p>
+                                        <p>Checkout lúc: {iteam.time_checkout?iteam.time_checkout:"Đang chờ"}</p>
+                                    </div>
+                                    <div className='state'>
+                                        {
+                                            (iteam.time_checkin===null)
+                                            ?
+                                            <p style={{color:"grey"}}>Chưa checkin</p>
+                                            :
+                                            (
+                                                (iteam.time_checkout===null)
+                                                ?
+                                                <p style={{color:"blue"}}>Chờ thanh toán</p>
+                                                :
+                                                <p style={{color:"green"}}>Đã thanh toán</p>
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                            ))
+                        }
+                        
                     </div>
                 </div>
             </div>

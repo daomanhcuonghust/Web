@@ -23,7 +23,7 @@
 }
 .logout button{
     height: 30px;
-    width: 80px;
+    width: auto;
     color: #fff;
     background-color: #fa4e57;
     border-color: #fa4e57;
@@ -173,7 +173,7 @@
 .all .one{
     border: 1px solid rgb(0,0,0,0.5);
     width: 90%;
-    height: 65px;
+    height: 130px;
     display: flex;
     margin-top: 5px;
     margin-bottom: 10px;

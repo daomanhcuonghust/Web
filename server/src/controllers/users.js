@@ -124,6 +124,7 @@ export const personalUpdateUser = handleAsync(async (req, res) => {
     }
     const newdata = await User.findById(userId)
     res.json({
+      success:true,
       message: "Cập nhật thành công",
       newdata,
     })

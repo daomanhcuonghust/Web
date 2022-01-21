@@ -70,7 +70,7 @@ function TicketBooking() {
                         <option>Chọn loại vé</option>
                         {
                             listTicket.map(ticket=>
-                                <option value={ticket._id}>{ticket.nameTicket}</option>
+                                <option key={ticket._id} value={ticket._id}>{ticket.nameTicket}</option>
                             )
                         }
                     </Form.Control>
