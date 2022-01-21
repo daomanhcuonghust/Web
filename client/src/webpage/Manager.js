@@ -20,10 +20,10 @@ export default function Manager() {
                 <Route exact path="/xemdoanhthu" element={<Xemdoanhthu/>}></Route>
                 <Route exact path="/quanlynv" element={<StaffManage/>}></Route>
                 <Route exact path="/themnv" element={<AddStaff/>}></Route>
-                <Route exact path="/suanv" element={<ChangeStaff/>}></Route>
-                <Route exact path="/themsk" element={<AddEvent/>}></Route>
-                <Route exact path="/suask" element={<ChangeEvent/>}></Route>
+                <Route exact path="/suanv/:idnv" element={<ChangeStaff/>}></Route>
                 <Route exact path="/quanlysk" element={<EventManage/>}></Route>
+                <Route exact path="/themsk" element={<AddEvent/>}></Route>
+                <Route exact path="/suask/:idsk" element={<ChangeEvent/>}></Route>
             </Routes>
         </div>
         <Footer/>

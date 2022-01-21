@@ -17,23 +17,38 @@ const AdminSidebar = () => {
               <Menu iconShape="square">
                 <MenuItem >
                   Xem doanh thu 
-                  <Link to="xemdoanhthu" />  
+                  <Link to="/manager/xemdoanhthu" />  
                 </MenuItem>
                 <SubMenu title="Quản lý khu vui chơi" >
-                  <MenuItem>Component 1</MenuItem>
+                  <MenuItem>
+                    Thông tin khu vui chơi
+                    <Link to="/manager" ></Link>
+                  </MenuItem>
                   <MenuItem>Component 2</MenuItem>
                 </SubMenu>
                 <SubMenu title="Quản lý sự kiện" >
-                  <MenuItem>Danh sách sự kiện <Link to="quanlysk" /></MenuItem>
-                  <MenuItem>Thêm sự kiện<Link to="themsk" /></MenuItem>
+                  <MenuItem>
+                    Danh sách sự kiện 
+                    <Link to="quanlysk" />
+                  </MenuItem>
+                  <MenuItem>
+                    Thêm sự kiện
+                    <Link to="themsk" />
+                  </MenuItem>
+                </SubMenu>
+                <SubMenu title="Quản lý nhân viên" >
+                  <MenuItem>
+                    Danh sách nhân viên
+                    <Link to="quanlynv" />
+                  </MenuItem>
+                  <MenuItem>
+                    Thêm nhân viên
+                    <Link to="themnv" />
+                  </MenuItem>
                 </SubMenu>
                 <SubMenu title="Quản lý khách hàng" >
                   <MenuItem>Component 1</MenuItem>
                   <MenuItem>Component 2</MenuItem>
-                </SubMenu>
-                <SubMenu title="Quản lý nhân viên" >
-                  <MenuItem>Danh sách nhân viên<Link to="quanlynv" /></MenuItem>
-                  <MenuItem>Thêm nhân viên<Link to="themnv" /></MenuItem>
                 </SubMenu>
               </Menu>
             </SidebarContent>

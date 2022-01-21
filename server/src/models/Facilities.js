@@ -17,8 +17,7 @@ const facilitiesSchema = new mongoose.Schema({
     },
     status: {
         type: Boolean,
-        require: true, 
-
+        require: true,
     }
 })
 

@@ -2,8 +2,12 @@ import React ,{ useState} from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { AiOutlineDelete } from 'react-icons/ai';
 import {BsPen} from 'react-icons/bs'
+import { useNavigate } from 'react-router-dom';
 
 export default function StaffManage(){
+
+  let navi=useNavigate();
+
   const deleteRow=() =>{
 
   }
@@ -35,7 +39,7 @@ export default function StaffManage(){
             <td>30.000.000</td>
             <td>admin123</td>
             <td className="text-center" >
-              <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>changeRow()} href="suanv">
+              <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi("/manager/suanv/23")}>
                 <BsPen/>
               </Button>
             </td>

@@ -1,12 +1,15 @@
 import React, { useState}  from "react";
 import {Form, Col, Row, InputGroup, FormControl, Card, Button, ButtonToolbar, ButtonGroup} from "react-bootstrap";
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import './eventManage.css'
 import { AiOutlineDelete } from 'react-icons/ai';
 import {BsPen} from 'react-icons/bs'
 import { Link } from 'react-router-dom';
 
+
 export default function EventManage() {
+
+    let navi=useNavigate();
     
         return (
             <div className="em">
@@ -32,7 +35,7 @@ export default function EventManage() {
                                 </Button>
                             </ButtonGroup>
                             <ButtonGroup className="mr-2">
-                                <Button variant="outline-secondary" style= {{ border: `none` }} href="suask">
+                                <Button onClick={()=>navi("/manager/suask/123")} variant="outline-secondary" style= {{ border: `none` }}>
                                     <BsPen/>
                                 </Button>
                                 <Button variant="outline-danger" style= {{ border: `none` }} >

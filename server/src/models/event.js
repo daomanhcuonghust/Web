@@ -2,7 +2,7 @@ import mongoose  from 'mongoose';
 
 const eventSchema = new mongoose.Schema({
     image : {
-        type: String,
+        type: [String],
         require: true, 
     },
     name: {
@@ -22,6 +22,10 @@ const eventSchema = new mongoose.Schema({
     description: {
         type: String, 
         require: true, 
+    },
+    detail: {
+        type: String,
+        require: true
     },
     discount: {
         type: Number,
