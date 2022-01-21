@@ -4,7 +4,6 @@ import { handleAsync } from "../utils"
 export const updateStaff = handleAsync(async (req, res) => {
   try {
     const data = await Staff.findByIdAndUpdate(req.params.id, {
-      staff_code: req.body.staff_code,
       phoneNumber: req.body.phoneNumber,
       password: req.body.password,
       firstName: req.body.firstName,

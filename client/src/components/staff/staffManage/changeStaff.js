@@ -4,49 +4,63 @@ import {Form, Col, Row, InputGroup, FormControl} from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 export default function ChangeStaff() {
-    const [validated, setValidated] = useState(false);
-    
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [role, setRole] = useState();
+    const [email, setEmail] = useState("");
+    const [salary, setSalary] = useState(0);
+    const [password, setPassword] = useState("");
+
+
     let { idnv }=useParams();
 
     useEffect(() => {
       async function fetchnv(){
-        let datanv=await axios()
+        let datanv=await axios.get(`http://localhost:5000/api/v1/staff/${idnv}`);
+        let data= datanv.data.data;
+        setFirstName(data.firstName);
+        setLastName(data.lastName);
+        setEmail(data.email);
+        setSalary(data.salary);
+        setPhoneNumber(data.phoneNumber);
+        setRole(data.role);
       }
       fetchnv();
     }, []);
     
-    const handleSubmit = (event) => {
-      const form = event.currentTarget;
-      if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-  
-      setValidated(true);
-    };
+
         return (
             <div className="db">
-
-            
-                <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <Form>
                     <h3>Thay đổi thông tin nhân viên</h3>
+                    <Form.Label>Họ nhân viên</Form.Label>
+                    <InputGroup className="mb-3">
+                    <Form.Control
+                        required
+                        type="text"
+                        placeholder="Nhập họ nhân viên"
+                        value={firstName}
+                        onChange={e=>setFirstName(e.target.value)}
+                    />
+                    </InputGroup>
                     <Form.Label>Tên nhân viên</Form.Label>
                     <InputGroup className="mb-3">
                     <Form.Control
                         required
                         type="text"
                         placeholder="Nhập tên nhân viên"
-                        defaultValue="Mark"
+                        value={lastName}
+                        onChange={e=>setLastName(e.target.value)}
                     />
                     </InputGroup>
                     <Form.Label>Chức vụ</Form.Label>
                     <InputGroup className="mb-3">
-                    <Form.Control
-                        required
-                        type="text"
-                        placeholder="Nhập tên chức vụ"
-                        defaultValue="Mark"
-                    />
+                    <Form.Control as="select" defaultValue={role} onChange={(e)=>setRole(e.target.value)}>
+                        <option value={0}>Người quản lý</option>
+                        <option value={2}>Nhân viên lễ tân</option>
+                        <option value={1}>Nhân viên quầy</option>
+                    </Form.Control>
                     </InputGroup>
 
                     <Form.Label>Lương</Form.Label>
@@ -55,7 +69,8 @@ export default function ChangeStaff() {
                         required
                         type="text"
                         placeholder="Nhập lương"
-                        defaultValue="Mark"
+                        value={salary}
+                        onChange={e=>setSalary(e.target.value)}
                     />
                     </InputGroup>
 
@@ -65,18 +80,19 @@ export default function ChangeStaff() {
                         required
                         type="text"
                         placeholder="Nhập số điện thoại"
-                        defaultValue="Mark"
+                        value={phoneNumber}
+                        onChange={e=>setPhoneNumber(e.target.value)}
                     />
                     </InputGroup>
                     
-                    <label>Mật khẩu</label>
+                    <label>Mật khẩu mới</label>
                     <InputGroup className="mb-3">
-                   
                         <FormControl
                         required
                         type="text"
                         placeholder="Nhập mật khẩu"
-                        defaultValue="Mark"
+                        defaultValue=""
+                        onChange={e=>setPassword(e.target.value)}
                     />
                     </InputGroup>
                     
