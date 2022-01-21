@@ -1,19 +1,39 @@
-import React ,{ useState} from 'react';
+import React ,{ useEffect, useState} from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { AiOutlineDelete } from 'react-icons/ai';
 import {BsPen} from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 export default function StaffManage(){
 
+  const [data, setData] = useState([]);
+
+
   let navi=useNavigate();
 
+  useEffect(() => {
+    async function fetchdata(){
+      let data=await axios.get("http://localhost:5000/api/v1/staff");
+      setData(data.data.data);
+    }
+    fetchdata();
+  },[]);
+
+  const checkRole =(role)=>{
+    if(role==0){
+      return "Quản lý";
+    }else if(role==1){
+      return "Nhân viên quầy";
+    }else{
+      return "Nhân viên lễ tân";
+    }
+  }
+
   const deleteRow=() =>{
-
+      
   }
-  const changeRow=() =>{
 
-  }
   return(
     <div className='db'>
      
@@ -26,68 +46,40 @@ export default function StaffManage(){
             <th>Họ và tên</th>
             <th>Chức vụ</th>
             <th>Lương</th>
-            <th>Tài khoản</th>
+            <th>Số điện thoại</th>
             
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>nv1</td>
-            <td>Otto</td>
-            <td>Quản lý</td>
-            <td>30.000.000</td>
-            <td>admin123</td>
-            <td className="text-center" >
-              <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi("/manager/suanv/23")}>
-                <BsPen/>
-              </Button>
-            </td>
-            <td className="text-center" >
-              
-              <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow()}>
-                <AiOutlineDelete />
-              </Button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>nv2</td>
-            <td>Mark</td>
-            <td>Nhân viên quầy</td>
-            <td>5.000.000</td>
-            <td>blabla</td>
-            <td className="text-center" >
-              <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>changeRow()} href="suanv">
-                <BsPen/>
-              </Button>
-            </td>
-            <td className="text-center" >
-              
-              <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow()}>
-                <AiOutlineDelete />
-              </Button>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>nv3</td>
-            <td>Jeff</td>
-            <td>Nhân viên lễ tân</td>
-            <td>5.000.000</td>
-            <td>usename123</td>
-            <td className="text-center" >
-              <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>changeRow()} href="suanv">
-                <BsPen/>
-              </Button>
-            </td>
-            <td className="text-center" >
-              
-              <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow()}>
-                <AiOutlineDelete />
-              </Button>
-            </td>
-          </tr>
+          {
+            data&&
+            data.map((staf,index)=>{
+              return(
+                <tr key={staf._id}>
+                  <td>{index+1}</td>
+                  <td>{staf._id}</td>
+                  <td>{staf.firstName+' '+staf.lastName}</td>
+                  <td>
+                    {
+                      checkRole(staf.role)
+                    }
+                  </td>
+                  <td>{staf.salary}</td>
+                  <td>{staf.phoneNumber}</td>
+                  <td className="text-center" >
+                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/suanv/${staf._id}`)}>
+                      <BsPen/>
+                    </Button>
+                  </td>
+                  <td className="text-center" >
+                    <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow()}>
+                      <AiOutlineDelete />
+                    </Button>
+                  </td>
+                </tr>
+              )
+            })
+          }
         </tbody>
       </Table>
     </div>

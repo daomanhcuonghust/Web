@@ -61,8 +61,8 @@ export default function Home() {
             <Row>
                 {
                     lastEvent.map(evnt=>
-                        <Card className='ev'>
-                            <Card.Img variant="top" src={evnt.image}  height="300"/>          
+                        <Card key={evnt._id} className='ev'>
+                            <Card.Img variant="top" src={evnt.image[0]}  height="300"/>          
                             <Card.Body>
                                 <Card.Title>{evnt.name}</Card.Title>
                                 <Card.Text>

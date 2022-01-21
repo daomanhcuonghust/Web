@@ -69,8 +69,6 @@ export default function AddEvent() {
                     />
                     </InputGroup>
                     
-                    
-               
                 <button type="submit" style={{paddingTop : '10px'}} className="btn btn-dark btn-lg btn-block">Submit</button>
                 </Form>
             

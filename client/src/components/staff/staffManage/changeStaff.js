@@ -1,9 +1,20 @@
-import React, { useState}  from "react";
+import axios from "axios";
+import React, { useEffect, useState}  from "react";
 import {Form, Col, Row, InputGroup, FormControl} from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
-export default function ChangeEvent() {
+export default function ChangeStaff() {
     const [validated, setValidated] = useState(false);
+    
+    let { idnv }=useParams();
 
+    useEffect(() => {
+      async function fetchnv(){
+        let datanv=await axios()
+      }
+      fetchnv();
+    }, []);
+    
     const handleSubmit = (event) => {
       const form = event.currentTarget;
       if (form.checkValidity() === false) {

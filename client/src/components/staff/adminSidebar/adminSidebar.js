@@ -1,11 +1,19 @@
 import React from "react";
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent, SidebarFooter } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
 const AdminSidebar = () => {
+
+  let navi=useNavigate();
+
+  const handleLogout=()=>{
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("nameUser");
+    navi("/user/home");
+  }
         return (
           <div className='adminsb'>
           <ProSidebar>
@@ -55,7 +63,9 @@ const AdminSidebar = () => {
 
             <SidebarFooter>
               <Menu iconShape="square">
-              <MenuItem>
+              <MenuItem
+                onClick={()=>handleLogout()}
+              >
                 Đăng xuất
               </MenuItem>
               </Menu>

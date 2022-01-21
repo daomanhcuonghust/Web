@@ -23,9 +23,9 @@ export default function EventList() {
                 <Row md={4}>
                 {
                     listEvent.map(ev=>
-                        <Col md={4} style={{marginBottom:"25px"}}>
+                        <Col key={ev._id} md={4} style={{marginBottom:"25px"}}>
                             <Card className='av'>
-                                <Card.Img variant="top" src={ev.image} height="300" />
+                                <Card.Img variant="top" src={ev.image[0]} height="300" />
                                 <Card.Body>
                                     <Card.Title>{ev.name}</Card.Title>
                                     <Card.Text>
