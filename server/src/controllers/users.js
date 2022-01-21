@@ -1,26 +1,34 @@
 import { User, User_ticket, Event, User_event } from "../models"
 import { handleAsync } from "../utils"
+import bcrypt from "bcrypt"
 
 export const updateUser = handleAsync(async (req, res) => {
   try {
-    const data = await User.findByIdAndUpdate(req.params.id, {
+    var newPassword
+    if (req.body.password) {
+      newPassword = await bcrypt.hash(req.body.password, 8)
+    }
+    let params = {
       phoneNumber: req.body.phoneNumber,
-      password: req.body.password,
+      password: newPassword,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
       is_vip: req.body.is_vip,
       id_vip_transition: req.body.id_vip_transition,
-    })
+    }
+    for (let prop in params) if (!params[prop]) delete params[prop]
+    const data = await User.findByIdAndUpdate(req.params.id, params)
     if (!data) {
       return res.json({
         message: "Cập nhật thất bại",
         cause: "Khách hàng không tồn tại",
       })
     }
+    const newdata = await User.findById(req.params.id)
     res.json({
       message: "Cập nhật thành công",
-      data,
+      newdata,
     })
   } catch (error) {
     res.json({
