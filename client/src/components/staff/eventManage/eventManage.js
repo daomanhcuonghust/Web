@@ -13,6 +13,7 @@ export default function EventManage() {
                 <Row md={4} > 
                 <Col>
                     <Card  className='av'>
+                        <div className="ribbon"><span>-50%</span></div>
                         <Card.Img variant="top" src="https://banahills.sunworld.vn/wp-content/uploads/2021/05/Travel-and-Guide-Facebook-Cover-1-1024x577.png" height="200" />
                         <Card.Body >
                             <Card.Title> Tinker Bell Garden TẠM NGỪNG ĐÓN KHÁCH THAM QUAN TỪ NGÀY...</Card.Title>
