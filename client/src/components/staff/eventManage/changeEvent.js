@@ -27,6 +27,39 @@ export default function ChangeEvent() {
                         placeholder="Nhập tên sự kiện"
                         defaultValue="Mark"
                     />
+                    <Form.Row>
+                    <Col>
+                        <Form.Label>Ngày bắt đầu</Form.Label>
+                        <Form.Control
+                            required
+                            type="date"
+                            placeholder="Nhập ngày bắt đầu"
+                            defaultValue="2011-09-29"
+                        />
+                    </Col>
+                    <Col>
+                        <Form.Label>Ngày kết thúc</Form.Label>
+                        <Form.Control
+                            required
+                            type="date"
+                            placeholder="Nhập ngày kết thúc"
+                            defaultValue="2011-09-29"
+                        />
+                    </Col>
+                    <Col xs={3}>
+                        <Form.Label>Giảm giá</Form.Label>
+                        <InputGroup className="mb-3">
+                        <InputGroup.Text id="basic-addon1">%</InputGroup.Text>
+                        <FormControl
+                        required
+                        type="number"
+                        placeholder="Nhập % giảm giá"
+                        defaultValue="50"
+                        />
+                        </InputGroup>
+                    </Col>
+                    
+                </Form.Row>
                     <Form.Label>Mô tả</Form.Label>
                     <Form.Control
                         required
@@ -37,7 +70,7 @@ export default function ChangeEvent() {
                     <Form.Label>Nội dung</Form.Label>
                     <Form.Control 
                         as="textarea" 
-                        rows={4} 
+                        rows={3} 
                         required
                         type="text"
                         placeholder="Nhập nội dung"

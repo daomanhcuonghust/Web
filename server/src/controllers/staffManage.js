@@ -31,6 +31,26 @@ export const updateStaff = handleAsync(async (req, res) => {
   }
 })
 
+export const getOneStaff = handleAsync(async (req, res) => {
+  try {
+    const staff = await Staff.findById(req.params.id)
+    if (!staff) {
+      return res.json({
+        message: "Xóa thất bại",
+        cause: "Nhân viên không tồn tại",
+      })
+    }
+    res.json({
+      data: staff,
+    })
+  } catch (error) {
+    res.json({
+      message: "Tra cứu thất bại",
+      error,
+    })
+  }
+})
+
 export const deleteStaff = handleAsync(async (req, res) => {
   try {
     const data = await Staff.findByIdAndRemove(req.params.id)

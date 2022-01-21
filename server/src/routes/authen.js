@@ -39,6 +39,7 @@ import {
   personalUpdateUser,
   getFacilities,
   userJoinEvents,
+  getOneStaff,
 } from "../controllers"
 import {
   validateLogin,
@@ -83,6 +84,7 @@ router.post("/Event", createEvent)
 router.get("/event/user/:id", participantsEvent)
 
 router.get("/staff", getStaff)
+router.get("/staff/:id", getOneStaff)
 router.patch("/staff/:id", updateStaff)
 router.delete("/staff/:id", deleteStaff)
 
