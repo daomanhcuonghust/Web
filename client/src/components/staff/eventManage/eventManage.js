@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './eventManage.css'
 import { AiOutlineDelete } from 'react-icons/ai';
 import {BsPen} from 'react-icons/bs'
+import axios from "axios"
 
 
 export default function EventManage() {
@@ -25,8 +26,18 @@ export default function EventManage() {
         })  
     }, []);
 
-    const handleDeteleEvent = (id)=>{
-
+    const handleDeteleEvent =async (id)=>{
+        try{
+            const res=await axios.delete(`http://localhost:5000/api/v1/event/${id}`)
+            console.log(res);
+            if(res.data.success){
+              const newdata=listEvent.filter(ev=>ev._id!==id);
+              setListEvent(newdata);
+              alert("xoa thanh cong");
+            }
+          }catch(err){
+            alert("error")
+          }
     }
     
         return (
@@ -35,7 +46,7 @@ export default function EventManage() {
                 <Row md={6}>
                 {
                     listEvent.map(ev=>
-                        <Col md={5} style={{marginBottom:"25px"}}>
+                        <Col key={ev._id} md={5} style={{marginBottom:"25px"}}>
                             <Card className='av'>
                                 <Card.Img variant="top" src={ev.image[0]} height="200" />
                                 <Card.Body>

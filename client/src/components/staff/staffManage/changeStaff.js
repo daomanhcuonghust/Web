@@ -58,8 +58,8 @@ export default function ChangeStaff() {
                     <InputGroup className="mb-3">
                     <Form.Control as="select" defaultValue={role} onChange={(e)=>setRole(e.target.value)}>
                         <option value={0}>Người quản lý</option>
-                        <option value={2}>Nhân viên lễ tân</option>
                         <option value={1}>Nhân viên quầy</option>
+                        <option value={2}>Nhân viên lễ tân</option>
                     </Form.Control>
                     </InputGroup>
 

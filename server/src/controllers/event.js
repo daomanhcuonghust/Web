@@ -51,6 +51,7 @@ export const deleteEvent = handleAsync(async (req, res) => {
       });
     }
     res.json({
+      success:true,
       message: "Xóa vé thành công",
     });
   } catch (error) {

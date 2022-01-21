@@ -3,11 +3,7 @@ import { handleAsync } from "../utils"
 
 export const updateStaff = handleAsync(async (req, res) => {
   try {
-<<<<<<< HEAD
-    const data = await Staff.findByIdAndUpdate(req.params.id, {
-=======
     let params = {
->>>>>>> da5291d591399aa0e54b7305ea466b702f30b4a7
       phoneNumber: req.body.phoneNumber,
       password: req.body.password,
       firstName: req.body.firstName,
@@ -66,6 +62,7 @@ export const deleteStaff = handleAsync(async (req, res) => {
       })
     }
     res.json({
+      success:true,
       message: "Xóa nhân viên thành công",
     })
   } catch (error) {
