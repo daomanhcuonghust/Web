@@ -57,8 +57,8 @@ router.post("/logout", logout)
 router.post("/signup", validateSignup, createUser)
 router.post("/signup-staff", validateSignupStaff, createStaff)
 
-router.get("/userInfo/:id", getPersonalInfo)
-router.patch("/userInfo/:id", personalUpdateUser)
+router.get("/userInfo", signedIn, getPersonalInfo)
+router.patch("/userInfo", signedIn, personalUpdateUser)
 
 router.post("/ticket", CreateTicket)
 router.get("/ticket/:id", infoTicket)
