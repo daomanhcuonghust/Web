@@ -1,26 +1,34 @@
-import { User, User_ticket, Event, User_event } from "../models"
+import { User, User_ticket, Event, User_event, Vip_transition } from "../models"
 import { handleAsync } from "../utils"
+import bcrypt from "bcrypt"
 
 export const updateUser = handleAsync(async (req, res) => {
   try {
-    const data = await User.findByIdAndUpdate(req.params.id, {
+    var newPassword
+    if (req.body.password) {
+      newPassword = await bcrypt.hash(req.body.password, 8)
+    }
+    let params = {
       phoneNumber: req.body.phoneNumber,
-      password: req.body.password,
+      password: newPassword,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
       is_vip: req.body.is_vip,
       id_vip_transition: req.body.id_vip_transition,
-    })
+    }
+    for (let prop in params) if (!params[prop]) delete params[prop]
+    const data = await User.findByIdAndUpdate(req.params.id, params)
     if (!data) {
       return res.json({
         message: "Cập nhật thất bại",
         cause: "Khách hàng không tồn tại",
       })
     }
+    const newdata = await User.findById(req.params.id)
     res.json({
       message: "Cập nhật thành công",
-      data,
+      newdata,
     })
   } catch (error) {
     res.json({
@@ -50,20 +58,41 @@ export const deleteUser = handleAsync(async (req, res) => {
   }
 })
 
-export const getPersonalInfo = async (req, res, next) => {
-  const idUser = req.params.id
+export const getPersonalInfo = handleAsync(async (req, res) => {
+  const userId = req.user.userId
   try {
-    const userinfo = await User.findById(idUser)
-    const userticket = await User_ticket.find({ id_user: idUser })
+    const userinfo = await User.findById(userId)
+    const userticket = await User_ticket.find({ id_user: userId })
+    const vipInfo = await Vip_transition.findById(userinfo.id_vip_transition)
+    // const vipExpiration = await Vip_transition.find()
     if (!userinfo) {
       return res.status(404).json({ success: false, message: "User Not Found" })
     }
-    if (!userticket) {
+    if (userticket.length < 1 && !vipInfo) {
       return res.status(200).json({
         success: true,
         message: "Success",
         info: userinfo,
         tickets: "Nothing",
+        VIP: "NoVIP",
+      })
+    }
+    if (userticket.length < 1) {
+      return res.status(200).json({
+        success: true,
+        message: "Success",
+        info: userinfo,
+        tickets: "Nothing",
+        VIP: vipInfo,
+      })
+    }
+    if (!vipInfo) {
+      return res.status(200).json({
+        success: true,
+        message: "Success",
+        info: userinfo,
+        tickets: userticket,
+        VIP: "NoVIP",
       })
     }
     res.status(200).json({
@@ -71,15 +100,17 @@ export const getPersonalInfo = async (req, res, next) => {
       message: "Success",
       info: userinfo,
       tickets: userticket,
+      VIP: vipInfo,
     })
   } catch (error) {
     res.status(500).json({ success: false, message: "INTERNAL SERVER ERROR" })
   }
-}
+})
 
 export const personalUpdateUser = handleAsync(async (req, res) => {
   try {
-    const data = await User.findByIdAndUpdate(req.params.id, {
+    const userId = req.user.userId
+    const data = await User.findByIdAndUpdate(userId, {
       phoneNumber: req.body.phoneNumber,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -91,7 +122,7 @@ export const personalUpdateUser = handleAsync(async (req, res) => {
         cause: "Khách hàng không tồn tại",
       })
     }
-    const newdata = await User.findById(req.params.id)
+    const newdata = await User.findById(userId)
     res.json({
       message: "Cập nhật thành công",
       newdata,

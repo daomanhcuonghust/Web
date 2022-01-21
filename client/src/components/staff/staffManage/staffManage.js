@@ -30,8 +30,19 @@ export default function StaffManage(){
     }
   }
 
-  const deleteRow=() =>{
-      
+  const deleteRow=async(id) =>{
+      try{
+        const res=await axios.delete(`http://localhost:5000/api/v1/staff/${id}`)
+        console.log(res);
+        if(res.data.success){
+          
+          const newdata=data.filter(nv=>nv._id!==id);
+          setData(newdata); 
+          alert("xoa thanh cong");
+        }
+      }catch(err){
+        alert("error")
+      }
   }
 
   return(
@@ -72,7 +83,7 @@ export default function StaffManage(){
                     </Button>
                   </td>
                   <td className="text-center" >
-                    <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow()}>
+                    <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow(staf._id)}>
                       <AiOutlineDelete />
                     </Button>
                   </td>

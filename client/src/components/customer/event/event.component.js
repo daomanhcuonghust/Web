@@ -79,7 +79,6 @@ export default function Event() {
                     <ButtonGroup/>
                     <ButtonGroup> 
                         <button 
-                            type="submit" 
                             className="btn btn-primary btn-lg" 
                             aria-describedby="btnGroupAddon2"
                             onClick={()=>handleSubmit()}

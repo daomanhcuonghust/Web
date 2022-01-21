@@ -1,27 +1,36 @@
 import { Staff } from "../models"
 import { handleAsync } from "../utils"
+import bcrypt from "bcrypt"
 
 export const updateStaff = handleAsync(async (req, res) => {
   try {
-    const data = await Staff.findByIdAndUpdate(req.params.id, {
-      staff_code: req.body.staff_code,
+    var newPassword
+    if (req.body.password) {
+      newPassword = await bcrypt.hash(req.body.password, 8)
+    }
+
+    let params = {
       phoneNumber: req.body.phoneNumber,
-      password: req.body.password,
+      password: newPassword,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
       role: req.body.role,
       salary: req.body.salary,
-    })
+    }
+    for (let prop in params) if (!params[prop]) delete params[prop]
+    const data = await Staff.findByIdAndUpdate(req.params.id, params)
     if (!data) {
       return res.json({
         message: "Cập nhật thất bại",
         cause: "Nhân viên không tồn tại",
       })
     }
+    const newdata = await Staff.findById(req.params.id)
     res.json({
+      success:true,
       message: "Cập nhật thành công",
-      data,
+      newdata,
     })
   } catch (error) {
     res.json({
@@ -61,6 +70,7 @@ export const deleteStaff = handleAsync(async (req, res) => {
       })
     }
     res.json({
+      success:true,
       message: "Xóa nhân viên thành công",
     })
   } catch (error) {
