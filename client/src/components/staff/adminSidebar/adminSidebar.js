@@ -29,10 +29,13 @@ const AdminSidebar = () => {
                 </MenuItem>
                 <SubMenu title="Quản lý khu vui chơi" >
                   <MenuItem>
-                    Thông tin khu vui chơi
-                    <Link to="/manager" ></Link>
+                    Cơ sở vật chất
+                    <Link to="facilities"/>
                   </MenuItem>
-                  <MenuItem>Component 2</MenuItem>
+                  <MenuItem>
+                    Giá dịch vụ
+                    <Link to="services"/>
+                  </MenuItem>
                 </SubMenu>
                 <SubMenu title="Quản lý sự kiện" >
                   <MenuItem>

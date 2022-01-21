@@ -5,7 +5,7 @@ import {BsPen} from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-export default function StaffManage(){
+export default function Facilities(){
 
   const [data, setData] = useState([]);
 
@@ -14,30 +14,21 @@ export default function StaffManage(){
 
   useEffect(() => {
     async function fetchdata(){
-      let data=await axios.get("http://localhost:5000/api/v1/staff");
+      let data=await axios.get("http://localhost:5000/api/v1/facilities");
       setData(data.data.data);
       console.log(data.data);
     }
     fetchdata();
   },[]);
 
-  const checkRole =(role)=>{
-    if(role==0){
-      return "Quản lý";
-    }else if(role==1){
-      return "Nhân viên quầy";
-    }else{
-      return "Nhân viên lễ tân";
-    }
-  }
 
   const deleteRow=async(id) =>{
       try{
-        const res=await axios.delete(`http://localhost:5000/api/v1/staff/${id}`)
+        const res=await axios.delete(`http://localhost:5000/api/v1/facilities/${id}`)
         console.log(res);
         if(res.data.success){
           
-          const newdata=data.filter(nv=>nv._id!==id);
+          const newdata=data.filter(facility=>facility._id!==id);
           setData(newdata); 
           alert("xoa thanh cong");
         }
@@ -49,42 +40,35 @@ export default function StaffManage(){
   return(
     <div className='db'>
      
-      <h3>Bảng quản lý nhân viên</h3>
+      <h3>Bảng quản lý cơ sở vật chất</h3>
       <Table striped bordered >
         <thead>
           <tr>
             <th>#</th>
-            <th>Mã nhân viên</th>
-            <th>Họ và tên</th>
-            <th>Chức vụ</th>
-            <th>Lương</th>
-            <th>Số điện thoại</th>
-            
+            <th>Mã CSVC</th>
+            <th>Tên CSVC</th>
+            <th>Khu</th>
+            <th>Tình trạng</th>     
           </tr>
         </thead>
         <tbody>
           {
             data&&
-            data.map((staf,index)=>{
+            data.map((facility,index)=>{
               return(
-                <tr key={staf._id}>
+                <tr key={facility._id}>
                   <td>{index+1}</td>
-                  <td>{staf._id}</td>
-                  <td>{staf.firstName+' '+staf.lastName}</td>
-                  <td>
-                    {
-                      checkRole(staf.role)
-                    }
-                  </td>
-                  <td>{staf.salary}</td>
-                  <td>{staf.phoneNumber}</td>
+                  <td>{facility._id}</td>
+                  <td>{facility.name}</td>
+                  <td>{facility.region}</td>
+                  <td>{facility.status}</td>
                   <td className="text-center" >
-                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/suanv/${staf._id}`)}>
+                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editFacility/${facility._id}`)}>
                       <BsPen/>
                     </Button>
                   </td>
                   <td className="text-center" >
-                    <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow(staf._id)}>
+                    <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow(facility._id)}>
                       <AiOutlineDelete />
                     </Button>
                   </td>

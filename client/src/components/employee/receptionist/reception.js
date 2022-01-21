@@ -35,6 +35,10 @@ function SearchBar(props) {
 }
 function Ticket(props) {
   const ticket = props.ticket;
+  let label = 'Check out';
+  if (ticket.status == 'Chờ check-in') {
+    label = 'Check in';
+  }
   return <div className='ticket'>
     <p>Tên khách hàng: {ticket.name}</p>
     <p>Số điện thoại: {ticket.phone}</p>
@@ -42,7 +46,7 @@ function Ticket(props) {
     <p>Số lượng: {ticket.quantity} vé</p>
     <p>Số tiền phải trả: {ticket.price} vnđ</p>
     <p>Tình trạng: {ticket.status}</p>
-    <Button onClick={props.onClick}>Check in</Button>
+    <Button onClick={props.onClick}>{label}</Button>
   </div>
 }
 function CreateTicket(props) {
@@ -57,7 +61,6 @@ function CreateTicket(props) {
         <option>Chọn loại vé</option>
         <option>Vé ngày (không giới hạn thời gian trong ngày)</option>
         <option>Vé lượt (thời gian chơi 2 giờ)</option>
-        <option>Đăng ký thành viên VIP</option>
       </Form.Control>
       <Form.Label>Số lượng{star}</Form.Label>
       <Form.Control type='number'defaultValue='1' min='1'/>
@@ -69,15 +72,33 @@ function CreateTicket(props) {
     </Form>
   </div>
 }
+function CreateVip(props) {
+  return <div>
+    <Form>
+      <Form.Label>Số điện thoại{star}</Form.Label>
+      <Form.Control placeholder='vd. 0987654321'/>
+      <Form.Label>Gói VIP{star}</Form.Label>
+      <Form.Control as='select'>
+        <option>Chọn gói VIP</option>
+        <option>3 tháng</option>
+        <option>6 tháng</option>
+        <option>12 tháng</option>
+      </Form.Control>
+      <hr/>
+      <p>Giá tiền: 100000 vnđ</p>
+      <Button onClick={props.onClick}>Xác nhận</Button>
+    </Form>
+  </div>
+}
 function AccordionTicket(props) {
-  if (props.listTicket.length == 0) {
+  if (props.listTicket.length === 0) {
     return <p> Không tìm thấy vé!</p>
   }
   else return <Accordion defaultActiveKey={0}>
     {props.listTicket.map((ticket, index) => {
       return <Card>
-        <Accordion.Toggle as={Card.Header} eventKey={index}>{ticket.phone}<Badge variant='success'>{ticket.status}</Badge></Accordion.Toggle>
-        <Accordion.Collapse as={Card.Body} eventKey={index}><Ticket ticket={ticket}/></Accordion.Collapse>
+        <Accordion.Toggle as={Card.Header} eventKey={index+1}>{ticket.phone}<Badge variant='success'>{ticket.status}</Badge></Accordion.Toggle>
+        <Accordion.Collapse as={Card.Body} eventKey={index+1}><Ticket ticket={ticket}/></Accordion.Collapse>
       </Card>
     })}
   </Accordion>
@@ -85,17 +106,23 @@ function AccordionTicket(props) {
 function Reception() {
     const [listTicket, setListTicket] = useState([]);
      
-    return <div className='container'>
-      <Tabs fill defaultActiveKey='tìm vé'>
-        <Tab eventKey='tìm vé' title='Tìm vé chờ' className='tab'>
-          <SearchBar onClick={() => {setListTicket(getTicketList())}}/>
-          <hr/>
-          <div className=''>
-            <AccordionTicket listTicket={listTicket}/>
-          </div>
-        </Tab>
-        <Tab eventKey='tạo vé' title='Tạo vé mới' className='tab'><CreateTicket/></Tab>
-      </Tabs>
+    return <div style={{  height: '100%',
+    width: '100%',
+    backgroundColor: '#0093E9',
+    backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)'}}>
+      <div className='reception1'>
+        <Tabs fill defaultActiveKey='1'>
+          <Tab eventKey='1' title='Tìm vé chờ' className='tab'>
+            <SearchBar onClick={() => {setListTicket(getTicketList())}}/>
+            <hr/>
+            <div className=''>
+              <AccordionTicket listTicket={listTicket}/>
+            </div>
+          </Tab>
+          <Tab eventKey='2' title='Tạo vé mới' className='tab'><CreateTicket/></Tab>
+          <Tab eventKey='3' title='Đăng ký vip' className='tab'><CreateVip/></Tab>
+        </Tabs>
+      </div>
     </div>
   }
 export default Reception

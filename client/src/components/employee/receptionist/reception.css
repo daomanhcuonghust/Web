@@ -2,24 +2,33 @@
     width: 70%;
     margin: 20px;
     padding: 20px;
-    background-color: white;
   }
 
-.container {
+.reception1 {
+    display:inline-block;
+    width: 80%;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 50px;
-    padding-top: 5px;
+    padding-top: 10px;
+    margin:40px;
+    margin-top: 20px;
+    min-height: 600px;
 }
 .ticket {
     display: block;
     background-color:white;
-    width: 90%;
-    margin: 20px;
-    padding: 10px;
+    width: 100%;
+    margin: 10px;
     text-align: left;
 }
 
 .tab {
-    width: 70%;
+    width: 80%;
+    margin-top: 20px;
+}
+
+hr {
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
