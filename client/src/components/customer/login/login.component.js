@@ -60,6 +60,10 @@ export default function Login() {
     }
 
     return (
+        <div className="loginpage" style={{  height: '100%',
+            width: '100%',
+            backgroundColor: '#0093E9',
+            backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)'}}>
         <div className="outer">
             <div className="inner">
             <form>
@@ -111,6 +115,7 @@ export default function Login() {
                 </p>
             </form>
             </div>
+        </div>
         </div>
     )
 }

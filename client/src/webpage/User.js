@@ -8,14 +8,15 @@ import Profile from '../components/customer/profile/Profile'
 import TicketBooking from '../components/customer/ticketBooking/ticketBooking'
 import VIPRegister from '../components/customer/Vip-register/vipregister.component'
 import Footer from '../components/footer/footer'
+import Home1 from '../components/customer/home/Home1'
 
 export default function User() {
     return (
         <div>
             <CustomerHeader/>
             <Routes>
-                <Route index element={<Home/>}></Route>
-                <Route exact path="/home" element={<Home/>}></Route>
+                <Route index element={<Home1/>}></Route>
+                <Route exact path="/home" element={<Home1/>}></Route>
                 <Route exact path="/event" element={<EventList/>}></Route>
                 <Route exact path="/event/:eventid" element={<Event/>}></Route>
                 <Route exact path="/tickbooking" element={<TicketBooking/>}></Route>

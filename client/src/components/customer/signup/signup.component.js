@@ -39,7 +39,11 @@ export default function SignUp() {
     }
 
     return (
-        <div className="outer">
+        <div style={{  minHeight: '100%',
+            width: '100%',
+            backgroundColor: '#4158D0',
+            backgroundImage: 'linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%)'}}>
+        <div className="outer" >
             <div className="inner">
                 <form>
                     <h3>Register</h3>
@@ -115,6 +119,7 @@ export default function SignUp() {
                         </p>
                 </form>
             </div>
+        </div>
         </div>
     )
 }
