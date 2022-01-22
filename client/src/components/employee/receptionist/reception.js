@@ -104,23 +104,30 @@ function AccordionTicket(props) {
   </Accordion>
 }
 function Reception() {
-    const [listTicket, setListTicket] = useState([]);
-     
+    const [inTickets, setInTickets] = useState([]);
+    const [outTickets, setOutTickets] = useState([]);
     return <div style={{  height: '100%',
     width: '100%',
     backgroundColor: '#0093E9',
     backgroundImage: 'linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)'}}>
       <div className='reception1'>
         <Tabs fill defaultActiveKey='1'>
-          <Tab eventKey='1' title='Tìm vé chờ' className='tab'>
-            <SearchBar onClick={() => {setListTicket(getTicketList())}}/>
+          <Tab eventKey='1' title='Check in' className='tab'>
+            <SearchBar onClick={() => {setInTickets(getTicketList())}}/>
             <hr/>
-            <div className=''>
-              <AccordionTicket listTicket={listTicket}/>
+            <div className='ticket'>
+              <AccordionTicket listTicket={inTickets}/>
             </div>
           </Tab>
-          <Tab eventKey='2' title='Tạo vé mới' className='tab'><CreateTicket/></Tab>
-          <Tab eventKey='3' title='Đăng ký vip' className='tab'><CreateVip/></Tab>
+          <Tab eventKey='2' title='Check out' className='tab'>
+            <SearchBar onClick={() => {setOutTickets(getTicketList())}}/>
+            <hr/>
+            <div className='ticket'>
+              <AccordionTicket listTicket={outTickets}/>
+            </div>
+          </Tab>
+          <Tab eventKey='3' title='Tạo vé mới' className='tab'><CreateTicket/></Tab>
+          <Tab eventKey='4' title='Đăng ký vip' className='tab'><CreateVip/></Tab>
         </Tabs>
       </div>
     </div>
