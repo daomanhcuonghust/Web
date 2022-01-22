@@ -35,6 +35,7 @@ export default function Profile() {
             setlastName(res.data.info.lastName)
             setphoneNumber(res.data.info.phoneNumber)
             setemail(res.data.info.email)
+            localStorage.setItem("nameUser",res.data.info.firstName+' '+res.data.info.lastName)
             if(res.data.tickets!=="Nothing")
                 setlist(res.data.tickets);
         }

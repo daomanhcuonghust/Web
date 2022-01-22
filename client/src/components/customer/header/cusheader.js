@@ -15,6 +15,10 @@ export default function CustomerHeader() {
       else setLogin(false);
   },[localStorage.getItem("accessToken")])
 
+  useEffect(() => {
+      setNameUser(localStorage.getItem("nameUser"));
+  },[localStorage.getItem("nameUser")])
+
   let navi=useNavigate();
 
   const handleLogout=()=>{

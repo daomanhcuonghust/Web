@@ -43,7 +43,7 @@ export default function Home1() {
                     <h1 style={{fontWeight: 'bold', color: '#30475E'}}>Chào mừng đến với</h1>
                     <h1 style={{fontWeight: 'bold', color: '#F05454'}}>TinkerBellGarden</h1>
                     <p>Đến với TinkerBellGarden, quý khách sẽ được trải nghiệm hệ thống khu vui chơi trẻ em phong phú, đa dạng, đắm chìm trong cảnh quan thiên nhiên, thưởng thức ẩm thực đa dạng và tận hưởng không khí lễ hội ngập tràn.</p>
-                    <Button onClick={()=>navi("/user/tickbooking")} style={{backgroundColor: '#F05454', border:'none'}}size="lg">Đặt vé ngay</Button> {' '}
+                    <Button onClick={()=>{login?navi("/user/tickbooking"):navi("/login")}} style={{backgroundColor: '#F05454', border:'none'}}size="lg">Đặt vé ngay</Button> {' '}
                     <Button onClick={()=>navi("/user/event")} variant="outline-secondary" size="lg">Khám phá</Button>
                 </Col>
                 <Col xs={6}><img style={{width:'100%', height:'100%'}} src="https://hoianit.com/wp-content/uploads/2020/06/bana1.jpg"/></Col>
@@ -58,7 +58,7 @@ export default function Home1() {
                             <Col key={evnt._id}>
                                 <Card className='homeCard' >
                                 <div className='ribbon'><span>-{evnt.discount}%</span></div>
-                                <Card.Img className='homeCardImg' variant="top" src={evnt.image[0]} />
+                                <Card.Img className='homeCardImg' variant="top" src={evnt.image[0]} height="270px" />
                                     <Card.Body className="homeCardBody"> 
                                         <Card.Title>{evnt.name}</Card.Title>
                                         <Card.Text>

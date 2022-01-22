@@ -26,7 +26,6 @@ export default function Manager() {
                 <Route exact path="/suask/:idsk" element={<ChangeEvent/>}></Route>
             </Routes>
         </div>
-        <Footer/>
         </>
     )
 }

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Carousel, Badge, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,9 +8,13 @@ export default function Event() {
         image:[]
     });
     const [login, setLogin] = useState(false);
+    const [eventJoined, seteventJoined] = useState([]);
+
+    let accessToken=localStorage.getItem("accessToken");
     let { eventid } = useParams();
     let navi=useNavigate();
-    console.log(event.image);
+
+
     useEffect(() => {
         fetch(`http://localhost:5000/api/v1/event/${eventid}`, {
             method: 'GET', // or 'PUT'
@@ -21,27 +26,74 @@ export default function Event() {
         .catch((error) => {
             alert("eror");
         })
-    }, []);
+    },[]);
 
     useEffect(() => {
-          let accessToken=localStorage.getItem("accessToken");
+          
           if(accessToken){
             setLogin(true);
           } 
           else setLogin(false); 
       },[localStorage.getItem("accessToken")])
 
-    const handleSubmit =()=>{
+    const handleSubmit =async(e)=>{
+        e.preventDefault()
         if(!login){
             navi("/login");
         }else{
-            //callapi
+            try{
+                const res=await axios.post("http://localhost:5000/api/v1/userEvent",
+                {
+                    id_event:eventid
+                },
+                {
+                headers:{
+                    authorization: `Bearer ${accessToken}`
+                }
+                })
+                console.log(res)
+                if(res.data.success){
+                    alert("tham gia thanh cong")
+                    fetchevjoined();
+                }else alert("that bai")
+            }catch(err){
+                alert("err")
+            }
         }
     }
+
+    useEffect(() => {
+        fetchevjoined();
+      },[]);
+
+    const fetchevjoined=async()=>{
+        try{
+        const res=await axios.get("http://localhost:5000/api/v1/user/event",{
+            headers:{
+              authorization: `Bearer ${accessToken}`
+            }
+        })
+        console.log(res)
+        if(res.data.success){
+            seteventJoined(res.data.result);
+        }
+        }catch(err){
+           console.log(err);
+        }
+    }
+
+    const checkjoin=(id)=>{
+        let check=false;
+        eventJoined.map(ev=>{
+            if(ev._id===id) check=true;
+        })
+        return check;
+    }
+
     
     return (
-            <div className="inner2">
-            <form>
+            <div style={{marginTop:"30px",marginBottom:"50px"}} className="inner2">
+            <form >
                 <h3>{event.name}</h3>
                 <hr size="1"  color="gray"/>  
                 <p style={{fontSize:"19px",fontWeight:"bold"}}>{event.description}</p>
@@ -77,14 +129,25 @@ export default function Event() {
    
                 <ButtonToolbar className="justify-content-between" aria-label="Toolbar with Button groups">
                     <ButtonGroup/>
-                    <ButtonGroup> 
-                        <button 
-                            className="btn btn-primary btn-lg" 
-                            aria-describedby="btnGroupAddon2"
-                            onClick={()=>handleSubmit()}
-                        >
+                    <ButtonGroup>
+                        {
+                            checkjoin(event._id)
+                            ?
+                            <button 
+                                className="btn btn-success btn-lg" 
+                                aria-describedby="btnGroupAddon2"
+                            >
+                                Đã tham gia
+                            </button>
+                            :
+                            <button 
+                                className="btn btn-primary btn-lg" 
+                                aria-describedby="btnGroupAddon2"
+                                onClick={(e)=>handleSubmit(e)}
+                            >
                             Tham gia sự kiện
-                        </button> 
+                            </button>
+                        }  
                     </ButtonGroup>
                 </ButtonToolbar>
                 </form>
