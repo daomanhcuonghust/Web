@@ -61,8 +61,8 @@ export const getTicketTypes = async (req, res) => {
   const ticketTitle = req.body.title
   try {
     console.log(ticketTitle)
-    const ticketName = await Ticket.find({ title: req.body.title })
-    const ticket=ticketName[0]
+    const ticketName = await Ticket.findOne({ title: req.body.title })
+    const ticket=ticketName
     const type=ticket.type
     
     if (ticketName.length < 1) {

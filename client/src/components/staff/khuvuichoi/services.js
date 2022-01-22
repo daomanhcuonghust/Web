@@ -1,39 +1,46 @@
-import React ,{ useEffect, useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { AiOutlineDelete } from 'react-icons/ai';
 import {BsPen} from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
+
 export default function Facilities(){
 
-  const [data, setData] = useState([]);
+  const [vaocua, setvaocua] = useState([]);
+  const [VIP, setVIP] = useState([]);
+  const [vephi, setvephi] = useState([]);
 
 
   let navi=useNavigate();
 
   useEffect(() => {
-    async function fetchdata(){
-      let data=await axios.get("http://localhost:5000/api/v1/ticket/61eaafd99cc06741fc0d4cda");
-      setData(data.data.result);
+    async function fetchvevaocua(){
+        let data=await axios.get("http://localhost:5000/api/v1/ticket/61eaafd99cc06741fc0d4cda");
+        setvaocua(data.data.result.type);
     }
-    fetchdata();
+    fetchvevaocua();
   },[]);
 
+  useEffect(() => {
+    async function fetchvevip(){
+        let data=await axios.get("http://localhost:5000/api/v1/ticket/61eae5e4ac7bee37e0362af5");
+        setVIP(data.data.result.type);
+    }
+    fetchvevip();
+  },[]);
+
+  useEffect(() => {
+    async function fetchtinhphi(){
+        let data=await axios.get("http://localhost:5000/api/v1/ticket/61eab0db9cc06741fc0d4ce6");
+        setvephi(data.data.result.type);
+    }
+    fetchtinhphi();
+  },[]);
 
   const deleteRow=async(id) =>{
-      try{
-        const res=await axios.delete(`http://localhost:5000/api/v1/facilities/${id}`)
-        console.log(res);
-        if(res.status == 200){
-          
-          const newdata=data.filter(facility=>facility._id!==id);
-          setData(newdata); 
-          alert("xoa thanh cong");
-        }
-      }catch(err){
-        alert("error")
-      }
+      
   }
   return(
     <div className='db'>
@@ -46,28 +53,22 @@ export default function Facilities(){
             <th>Tên vé</th>
             <th>Giá vé</th>
             <th style={{paddingLeft:'20px', width:'150px'}}>
-                <Button onClick={()=>navi(`/manager/addFacility`)}>Thêm CSVC</Button>
+
             </th>     
           </tr>
         </thead>
         <tbody>
           {
-            data&&
-            data.map((facility,index)=>{
+            vaocua&&
+            vaocua.map((iteam,index)=>{
               return(
-                <tr key={facility.facilities_code}>
+                <tr key={iteam._id}>
                   <td>{index+1}</td>
-                  <td>{facility.facilities_code}</td>
-                  <td>{facility.name}</td>
-                  <td>{facility.region}</td>
-                  <td>{facility.status}</td>
+                  <td>{iteam.nameTicket}</td>
+                  <td>{iteam.price}</td>
                   <td className="text-center" >
-                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editFacility/${facility._id}`)}>
+                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi()}>
                       <BsPen/>
-                    </Button>
-                  
-                    <Button variant="outline-danger" style= {{ border: `none`, marginLeft:'20px' }} onClick={()=>deleteRow(facility._id)}>
-                      <AiOutlineDelete />
                     </Button>
                   </td>
                 </tr>
@@ -77,38 +78,30 @@ export default function Facilities(){
         </tbody>
       </Table>
 
-      <h3>Vé vào cửa</h3>
+      <h3>Vé tính phí</h3>
       <Table striped bordered >
         <thead>
           <tr>
             <th>#</th>
             <th>Tên vé</th>
             <th>Giá vé</th>
-            <th>Khu</th>
-            <th>Tình trạng</th>
             <th style={{paddingLeft:'20px', width:'150px'}}>
-                <Button onClick={()=>navi(`/manager/addFacility`)}>Thêm CSVC</Button>
+                
             </th>     
           </tr>
         </thead>
         <tbody>
           {
-            data&&
-            data.map((facility,index)=>{
+            VIP&&
+            VIP.map((iteam,index)=>{
               return(
-                <tr key={facility.facilities_code}>
+                <tr key={iteam._id}>
                   <td>{index+1}</td>
-                  <td>{facility.facilities_code}</td>
-                  <td>{facility.name}</td>
-                  <td>{facility.region}</td>
-                  <td>{facility.status}</td>
+                  <td>{iteam.nameTicket}</td>
+                  <td>{iteam.price}</td>
                   <td className="text-center" >
-                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editFacility/${facility._id}`)}>
+                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi()}>
                       <BsPen/>
-                    </Button>
-                  
-                    <Button variant="outline-danger" style= {{ border: `none`, marginLeft:'20px' }} onClick={()=>deleteRow(facility._id)}>
-                      <AiOutlineDelete />
                     </Button>
                   </td>
                 </tr>
@@ -118,15 +111,13 @@ export default function Facilities(){
         </tbody>
       </Table>
 
-      <h3>Vé vào cửa</h3>
+      <h3>VIP</h3>
       <Table striped bordered >
         <thead>
           <tr>
             <th>#</th>
             <th>Tên vé</th>
             <th>Giá vé</th>
-            <th>Khu</th>
-            <th>Tình trạng</th>
             <th style={{paddingLeft:'20px', width:'150px'}}>
                 <Button onClick={()=>navi(`/manager/addFacility`)}>Thêm CSVC</Button>
             </th>     
@@ -134,22 +125,16 @@ export default function Facilities(){
         </thead>
         <tbody>
           {
-            data&&
-            data.map((facility,index)=>{
+            vephi&&
+            vephi.map((iteam,index)=>{
               return(
-                <tr key={facility.facilities_code}>
+                <tr key={iteam._id}>
                   <td>{index+1}</td>
-                  <td>{facility.facilities_code}</td>
-                  <td>{facility.name}</td>
-                  <td>{facility.region}</td>
-                  <td>{facility.status}</td>
+                  <td>{iteam.nameTicket}</td>
+                  <td>{iteam.price}</td>
                   <td className="text-center" >
-                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editFacility/${facility._id}`)}>
+                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi()}>
                       <BsPen/>
-                    </Button>
-                  
-                    <Button variant="outline-danger" style= {{ border: `none`, marginLeft:'20px' }} onClick={()=>deleteRow(facility._id)}>
-                      <AiOutlineDelete />
                     </Button>
                   </td>
                 </tr>
@@ -158,7 +143,8 @@ export default function Facilities(){
           }
         </tbody>
       </Table>
-    </div>
+
+    </div> 
   )
 
 }

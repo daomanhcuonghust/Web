@@ -13,6 +13,7 @@ import './manager.css'
 import AddFacility from '../components/staff/khuvuichoi/addFacility'
 import Facilities from '../components/staff/khuvuichoi/facilities'
 import EditFacility from '../components/staff/khuvuichoi/editFacility'
+import Services from '../components/staff/khuvuichoi/services'
 
 export default function Manager() {
     return (
@@ -30,6 +31,7 @@ export default function Manager() {
                 <Route exact path="/addFacility" element={<AddFacility/>}></Route>
                 <Route exact path="/facilities" element={<Facilities/>}></Route>
                 <Route exact path="/editFacility/:idfc" element={<EditFacility/>}></Route>
+                <Route exact path="/services" element={<Services/>}></Route>
             </Routes>
         </div>
         </>
