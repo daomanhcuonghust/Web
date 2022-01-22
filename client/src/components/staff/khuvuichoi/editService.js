@@ -3,7 +3,7 @@ import React, { useEffect, useState}  from "react";
 import {Form, Col, Row, InputGroup, FormControl} from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function EditFacility() {
+export default function EditService() {
     const [nameTicket, setNameTicket] = useState("");
     const [price, setPrice] = useState(1);
 

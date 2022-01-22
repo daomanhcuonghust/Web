@@ -77,7 +77,7 @@ export default function Facilities(){
                   <td>{iteam.nameTicket}</td>
                   <td>{iteam.price}</td>
                   <td className="text-center" >
-                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editservice/phi/61eaafd99cc06741fc0d4cda/${iteam._id}`)}>
+                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editservice/61eaafd99cc06741fc0d4cda/${iteam._id}`)}>
                       <BsPen/>
                     </Button>
                   </td>
@@ -96,7 +96,6 @@ export default function Facilities(){
             <th>Tên vé</th>
             <th>Giá vé</th>
             <th style={{paddingLeft:'20px', width:'150px'}}>
-              <Button onClick={()=>navi(`/manager/addVIP`)}>Thêm vé quầy</Button>
             </th>     
           </tr>
         </thead>
@@ -110,7 +109,7 @@ export default function Facilities(){
                   <td>{iteam.nameTicket}</td>
                   <td>{iteam.price}</td>
                   <td className="text-center" >
-                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editservice/VIP/61eae5e4ac7bee37e0362af5/${iteam._id}`)}>
+                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editservice/61eae5e4ac7bee37e0362af5/${iteam._id}`)}>
                       <BsPen/>
                     </Button>
                   </td>
@@ -143,7 +142,7 @@ export default function Facilities(){
                   <td>{iteam.nameTicket}</td>
                   <td>{iteam.price}</td>
                   <td className="text-center" >
-                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editservice/phi/61eab0db9cc06741fc0d4ce6/${iteam._id}`)}>
+                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editservice/61eab0db9cc06741fc0d4ce6/${iteam._id}`)}>
                       <BsPen/>
                     </Button>
                     <Button variant="outline-danger" style= {{ border: `none`, marginLeft:'20px' }} onClick={()=>deleteRow(iteam._id)}>

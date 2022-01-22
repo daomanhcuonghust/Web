@@ -3,7 +3,7 @@ import React, { useEffect, useState}  from "react";
 import {Form, Col, Row, InputGroup, FormControl} from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function EditFacility() {
+export default function EditserviceVIP() {
     const [nameTicket, setNameTicket] = useState("");
     const [price, setPrice] = useState(1);
     const [time,settime] =useState(1)
@@ -15,6 +15,7 @@ export default function EditFacility() {
     useEffect(() => {
         const fetchfc = async ()=>{
         let res=await axios.get(`http://localhost:5000/api/v1/ticket/${idloaive}`);
+        console.log(res)
         if(res.data.success){
             const list=res.data.result.type
             list.map(iteam=>{
@@ -28,10 +29,10 @@ export default function EditFacility() {
         }else{
             alert("that bai")
         }
-        
       }
       fetchfc();
     }, []);
+    console.log(kindOfTime)
     const handleSubmit=async (e)=>{
         e.preventDefault();
         if(nameTicket&&price&&time&&kindOfTime){
@@ -99,14 +100,13 @@ export default function EditFacility() {
                     <Form.Label>Loại</Form.Label>
                     <InputGroup className="mb-3">
                     <Form.Group controlId="exampleForm.ControlSelect1">
-                    <Form.Label>Vai trò</Form.Label>
                     <Form.Control as="select" defaultValue={ kindOfTime } onChange={(e)=>setkindOfTime(e.target.value)}>
                         <option value='day'>Ngày</option>
                         <option value='month'>Tháng</option>
                         <option value='year'>Năm</option>
                     
-                    </Form.Control>
-                </Form.Group>
+                        </Form.Control>
+                        </Form.Group>
                     </InputGroup>
 
                 <button onClick={(e)=>handleSubmit(e)} style={{paddingTop : '10px'}} className="btn btn-dark btn-lg btn-block">Submit</button>
