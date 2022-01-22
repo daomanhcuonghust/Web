@@ -16,6 +16,7 @@ import EditFacility from '../components/staff/khuvuichoi/editFacility'
 import Services from '../components/staff/khuvuichoi/services'
 import Addservice from '../components/staff/khuvuichoi/addService'
 import Editservice from '../components/staff/khuvuichoi/editService'
+import EditserviceVIP from '../components/staff/khuvuichoi/editVIP'
 
 export default function Manager() {
     return (
@@ -35,7 +36,8 @@ export default function Manager() {
                 <Route exact path="/editFacility/:idfc" element={<EditFacility/>}></Route>
                 <Route exact path="/services" element={<Services/>}></Route>
                 <Route exact path="/addvephi" element={<Addservice/>}></Route>
-                <Route exact path="/editservice/:idloaive/:idve" element={<Editservice/>}></Route>
+                <Route exact path="/editservice/phi/:idloaive/:idve" element={<Editservice/>}></Route>
+                <Route exact path="/editservice/VIP/:idloaive/:idve" element={<EditserviceVIP/>}></Route>
             </Routes>
         </div>
         </>

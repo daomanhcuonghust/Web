@@ -14,8 +14,7 @@ const ticketSchema = new mongoose.Schema(
         time:Number,
         kindOfTime:{
           type: String,
-          enum:['hour','day','month','year'],
-          default:'hour'
+          enum:['hour','day','month','year']
         }
       },
     ],

@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 export default function EditFacility() {
     const [nameTicket, setNameTicket] = useState("");
     const [price, setPrice] = useState(1);
+    const [time,settime] =useState(1)
+    const [kindOfTime, setkindOfTime] = useState("");
 
     let navi = useNavigate();
     let {idloaive,idve} = useParams();
@@ -19,6 +21,8 @@ export default function EditFacility() {
                 if(iteam._id===idve){
                     setNameTicket(iteam.nameTicket)
                     setPrice(iteam.price)
+                    settime(iteam.time)
+                    setkindOfTime(iteam.kindOfTime)
                 }
             })
         }else{
@@ -30,12 +34,14 @@ export default function EditFacility() {
     }, []);
     const handleSubmit=async (e)=>{
         e.preventDefault();
-        if(nameTicket&&price){
+        if(nameTicket&&price&&time&&kindOfTime){
             try{
                 const res=await axios.put(`http://localhost:5000/api/v1/ticket/${idloaive}/${idve}`,
                                             {
                                                 nameTicket,
-                                                price
+                                                price,
+                                                time,
+                                                kindOfTime
                                             }
                             ) 
                 console.log(res);
@@ -55,7 +61,7 @@ export default function EditFacility() {
             <div className="db">
 
                 <Form id="form">
-                    <h3>Sửa vé tại quầy</h3>
+                    <h3>Sửa VIP</h3>
                     
                     <Form.Label>Tên vé</Form.Label>
                     <InputGroup className="mb-3">
@@ -79,9 +85,33 @@ export default function EditFacility() {
                     />
                     </InputGroup>
 
+                    <Form.Label>Time</Form.Label>
+                    <InputGroup className="mb-3">
+                    <Form.Control
+                        required
+                        type="text"
+                        placeholder="Time"
+                        value={time}
+                        onChange={e=>settime(e.target.value)}
+                    />
+                    </InputGroup>
+
+                    <Form.Label>Loại</Form.Label>
+                    <InputGroup className="mb-3">
+                    <Form.Group controlId="exampleForm.ControlSelect1">
+                    <Form.Label>Vai trò</Form.Label>
+                    <Form.Control as="select" defaultValue={ kindOfTime } onChange={(e)=>setkindOfTime(e.target.value)}>
+                        <option value='day'>Ngày</option>
+                        <option value='month'>Tháng</option>
+                        <option value='year'>Năm</option>
+                    
+                    </Form.Control>
+                </Form.Group>
+                    </InputGroup>
+
                 <button onClick={(e)=>handleSubmit(e)} style={{paddingTop : '10px'}} className="btn btn-dark btn-lg btn-block">Submit</button>
                 </Form>
             </div>
-        );
-    
+            
+        )
 }

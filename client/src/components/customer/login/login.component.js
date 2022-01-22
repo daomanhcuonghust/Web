@@ -91,8 +91,8 @@ export default function Login() {
                     <Form.Control as="select" onChange={(e)=>setRole(e.target.value)}>
                         <option value={3}>Khách hàng</option>
                         <option value={0}>Người quản lý</option>
-                        <option value={2}>Nhân viên lễ tân</option>
                         <option value={1}>Nhân viên quầy</option>
+                        <option value={2}>Nhân viên lễ tân</option>
                     </Form.Control>
                 </Form.Group>
 
