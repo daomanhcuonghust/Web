@@ -57,6 +57,27 @@ export const infoTicket = async (req, res, next) => {
   }
 }
 
+export const getTicketTypes = async (req, res) => {
+  try {
+    const ticketTitle = req.body.title
+    const ticket = Ticket.find({ title: ticketTitle })
+    const types = ticket.type
+    if (!ticket) {
+      return res.status(404).json({ success: false, message: "Not Found" })
+    }
+    res.status(200).json({
+      success: true,
+      message: "Tra cứu thành công",
+      ticketTypes: types,
+    })
+  } catch (error) {
+    res.json({
+      message: "Có lỗi xảy ra",
+      error,
+    })
+  }
+}
+
 //update kiểu vé (vé 2h,tô tượng,....);
 export const updateTypeTicket = async (req, res, next) => {
   try {
@@ -158,8 +179,8 @@ export const UserBuyTicket = handleAsync(async (req, res) => {
   try {
     const isExistTicket = await Ticket.find({
       type: { $elemMatch: { _id: req.body.id_ticket } },
-    });
-    const isExistUser = await User.findById(req.user.userId);
+    })
+    const isExistUser = await User.findById(req.user.userId)
 
     if (!isExistTicket && !isExistUser) {
       return res.status(200).json({
@@ -168,13 +189,13 @@ export const UserBuyTicket = handleAsync(async (req, res) => {
       })
     }
 
-    const ticket={...req.body,id_user:req.user.userId}
+    const ticket = { ...req.body, id_user: req.user.userId }
 
-    const data = new User_ticket(ticket);
-    await data.save();
+    const data = new User_ticket(ticket)
+    await data.save()
 
     res.json({
-      success:true,
+      success: true,
       message: "Mua vé thành công",
       data,
     })
@@ -184,8 +205,7 @@ export const UserBuyTicket = handleAsync(async (req, res) => {
       error,
     })
   }
-
-});
+})
 
 //Get user's ticket information
 export const userTicket = async (req, res, next) => {
