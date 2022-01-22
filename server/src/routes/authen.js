@@ -12,6 +12,7 @@ import {
   createFacilities,
   updateFacilities,
   deleteFacilities,
+  getOneFacility,
   createEvent,
   updateEvent,
   deleteEvent,
@@ -75,6 +76,7 @@ router.put("/ticket/:id/:typeId", updateTypeTicket)
 router.get("/ticketIncome", validateViewIncome, getIncome)
 
 router.get("/facilities", getFacilities)
+router.get("/facilities/:id", getOneFacility)
 router.post("/facilities", createFacilities)
 router.patch("/facilities/:id", updateFacilities)
 router.post("/userEvent", signedIn, UserRegisterEvent)

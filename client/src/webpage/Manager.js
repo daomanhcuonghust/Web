@@ -12,6 +12,7 @@ import EventManage from '../components/staff/eventManage/eventManage'
 import './manager.css'
 import AddFacility from '../components/staff/khuvuichoi/addFacility'
 import Facilities from '../components/staff/khuvuichoi/facilities'
+import EditFacility from '../components/staff/khuvuichoi/editFacility'
 
 export default function Manager() {
     return (
@@ -28,6 +29,7 @@ export default function Manager() {
                 <Route exact path="/suask/:idsk" element={<ChangeEvent/>}></Route>
                 <Route exact path="/addFacility" element={<AddFacility/>}></Route>
                 <Route exact path="/facilities" element={<Facilities/>}></Route>
+                <Route exact path="/editFacility/:idfc" element={<EditFacility/>}></Route>
             </Routes>
         </div>
         </>

@@ -15,8 +15,7 @@ export default function Facilities(){
   useEffect(() => {
     async function fetchdata(){
       let data=await axios.get("http://localhost:5000/api/v1/facilities");
-      setData(data.data.data);
-      console.log(data.data);
+      setData(data.data.result);
     }
     fetchdata();
   },[]);
@@ -26,7 +25,7 @@ export default function Facilities(){
       try{
         const res=await axios.delete(`http://localhost:5000/api/v1/facilities/${id}`)
         console.log(res);
-        if(res.data.success){
+        if(res.status == 200){
           
           const newdata=data.filter(facility=>facility._id!==id);
           setData(newdata); 
@@ -36,7 +35,6 @@ export default function Facilities(){
         alert("error")
       }
   }
-
   return(
     <div className='db'>
      
@@ -48,7 +46,10 @@ export default function Facilities(){
             <th>Mã CSVC</th>
             <th>Tên CSVC</th>
             <th>Khu</th>
-            <th>Tình trạng</th>     
+            <th>Tình trạng</th>
+            <th style={{paddingLeft:'20px', width:'150px'}}>
+                <Button onClick={()=>navi(`/manager/addFacility`)}>Thêm CSVC</Button>
+            </th>     
           </tr>
         </thead>
         <tbody>
@@ -56,9 +57,9 @@ export default function Facilities(){
             data&&
             data.map((facility,index)=>{
               return(
-                <tr key={facility._id}>
+                <tr key={facility.facilities_code}>
                   <td>{index+1}</td>
-                  <td>{facility._id}</td>
+                  <td>{facility.facilities_code}</td>
                   <td>{facility.name}</td>
                   <td>{facility.region}</td>
                   <td>{facility.status}</td>
@@ -66,9 +67,8 @@ export default function Facilities(){
                     <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editFacility/${facility._id}`)}>
                       <BsPen/>
                     </Button>
-                  </td>
-                  <td className="text-center" >
-                    <Button variant="outline-danger" style= {{ border: `none` }} onClick={()=>deleteRow(facility._id)}>
+                  
+                    <Button variant="outline-danger" style= {{ border: `none`, marginLeft:'20px' }} onClick={()=>deleteRow(facility._id)}>
                       <AiOutlineDelete />
                     </Button>
                   </td>
