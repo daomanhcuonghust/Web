@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState}  from "react";
 import {Form, Col, Row, InputGroup, FormControl} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import "./changEvent.css"
 
 export default function AddEvent() {
     const [name, setName] = useState("");
@@ -49,7 +50,7 @@ export default function AddEvent() {
         }
     }
         return (
-            <div className="db">
+            <div style={{overflowY: 'scroll'}} className="db">
 
             
                 <Form>
@@ -118,7 +119,7 @@ export default function AddEvent() {
                         value={detail}
                         onChange={e=>setDetail(e.target.value)}
                     />
-                    <label>Chọn ảnh 1</label>
+                    <label style={{marginTop:"20px"}}>Chọn ảnh 1</label>
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1">URL</InputGroup.Text>
                         <FormControl
@@ -127,10 +128,13 @@ export default function AddEvent() {
                         placeholder="Nhập url ảnh 1"
                         value={image1}
                         onChange={e=>setImage1(e.target.value)}
-                        />
-                    
+                        />                    
                     </InputGroup>
-                    <label>Chọn ảnh 2</label>
+                    <div className="changeimg">
+                        <img className="imgchange" src={image1}/>
+                    </div>
+
+                    <label style={{marginTop:"20px"}}>Chọn ảnh 2</label>
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1">URL</InputGroup.Text>
                         <FormControl
@@ -140,10 +144,12 @@ export default function AddEvent() {
                         value={image2}
                         onChange={e=>setImage2(e.target.value)}
                     />
-                    
                     </InputGroup>
+                    <div className="changeimg">
+                        <img className="imgchange" src={image2}/>
+                    </div>
 
-                    <label>Chọn ảnh 3</label>
+                    <label style={{marginTop:"20px"}}>Chọn ảnh 3</label>
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="basic-addon1">URL</InputGroup.Text>
                         <FormControl
@@ -153,10 +159,12 @@ export default function AddEvent() {
                         value={image3}
                         onChange={e=>setImage3(e.target.value)}
                     />
-                    
                     </InputGroup>
+                    <div className="changeimg">
+                        <img className="imgchange" src={image3}/>
+                    </div>
                
-                <button onClick={(e)=>handleSubmit(e)} className="btn btn-dark btn-lg btn-block">Submit</button>
+                <button style={{marginTop:"30px"}}  onClick={(e)=>handleSubmit(e)} className="btn btn-dark btn-lg btn-block">Submit</button>
                 </Form>
             
 

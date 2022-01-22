@@ -46,10 +46,12 @@ export default function EventManage() {
                 <Row md={6}>
                 {
                     listEvent.map(ev=>
+
                         <Col key={ev._id} md={5} style={{marginBottom:"25px"}}>
                             <Card className='av'>
-                                <Card.Img variant="top" src={ev.image[0]} height="200" />
-                                <Card.Body>
+                            <div className='ribbon'><span>-{ev.discount}%</span></div>
+                                <Card.Img variant="top" src={ev.image[0]} height="270px" />
+                                <Card.Body height="100px">
                                     <Card.Title>{ev.name}</Card.Title>
                                     <Card.Text>
                                         {ev.description}
