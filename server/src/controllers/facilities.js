@@ -14,6 +14,26 @@ export const getFacilities = handleAsync(async (req, res) => {
   })
 })
 
+export const getOneFacility = handleAsync(async (req, res) => {
+  try {
+    const facility = await Facilities.findById(req.params.id)
+    if (!facility) {
+      return res.json({
+        message: "Tra cứu thất bại",
+        cause: "CSVC không tồn tại",
+      })
+    }
+    res.json({
+      data: facility,
+    })
+  } catch (error) {
+    res.json({
+      message: "Tra cứu thất bại",
+      error,
+    })
+  }
+})
+
 export const createFacilities = handleAsync(async (req, res) => {
   try {
     const data = new Facilities(req.body)

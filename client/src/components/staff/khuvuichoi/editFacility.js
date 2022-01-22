@@ -3,169 +3,100 @@ import React, { useEffect, useState}  from "react";
 import {Form, Col, Row, InputGroup, FormControl} from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function ChangeStaff() {
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [role, setRole] = useState(0);
-    const [email, setEmail] = useState("");
-    const [salary, setSalary] = useState(0);
-    const [password, setPassword] = useState("");
+export default function EditFacility() {
+    const [facilities_code, setFacilities_code] = useState("");
+    const [name, setName] = useState("");
+    const [region, setRegion] = useState("");
+    const [status, setStatus] = useState("");
 
-    let navi=useNavigate();
-    let { idnv }=useParams();
-
+    let navi = useNavigate();
+    let {idfc} = useParams();
 
     useEffect(() => {
-        const fetchnv = async ()=>{
-        let datanv=await axios.get(`http://localhost:5000/api/v1/staff/${idnv}`);
-        let data= datanv.data.data;
-        console.log(data)
-        setFirstName(data.firstName);
-        setLastName(data.lastName);
-        setEmail(data.email);
-        setSalary(data.salary);
-        setPhoneNumber(data.phoneNumber);
-        setRole(data.role);
+        const fetchfc = async ()=>{
+        let data=await axios.get(`http://localhost:5000/api/v1/facilities/${idfc}`);
+        console.log(data);
+        data= data.data.data;
+        setFacilities_code(data.facilities_code);
+        setName(data.name);
+        setRegion(data.region);
+        setStatus(data.status);
       }
-      fetchnv();
+      fetchfc();
     }, []);
-    console.log(role);
-    const handleSubmit = async (e)=>{
+    const handleSubmit=async (e)=>{
         e.preventDefault();
-      if(phoneNumber&&firstName&&lastName&&(role+1)&&email&&(salary+100)){
-          if(password){
+        if(facilities_code&&name&&region&&status){
             try{
-                let res=await axios.patch(`http://localhost:5000/api/v1/staff/${idnv}`,
-                    {
-                      phoneNumber,
-                      password,
-                      firstName,
-                      lastName,
-                      email,
-                      role,
-                      salary
-                    })
-                
-                if(res.data.success){
-                    alert("sua thong tin thanh cong")
-                    navi("/manager/quanlynv")
-                }else{
-                    alert("su thong tin that bai")
-                }
-            }catch(err){
-                alert("err")
+                const res=await axios.patch(`http://localhost:5000/api/v1/facilities/${idfc}`,
+                                            {
+                                                facilities_code,
+                                                name,
+                                                region,
+                                                status
+                                            }
+                            ) 
+                console.log(res);
+                if(res.status==200){
+                    alert("sua thanh cong");
+                    navi("/manager/facilities")
+
+                } 
+            }catch(error){
+                alert("sua that bai")
             }
-          }else{
-            try{
-                let res=await axios.patch(`http://localhost:5000/api/v1/staff/${idnv}`,
-                    {
-                      phoneNumber,
-                      firstName,
-                      lastName,
-                      email,
-                      role,
-                      salary
-                    })
-                if(res.data.success){
-                    alert("sua thong tin thanh cong")
-                    navi("/manager/quanlynv")
-                }else{
-                    alert("su thong tin that bai")
-                }
-            }catch(err){
-                alert("err")
-            }
-          }
-          
-      }else{
-          alert("thieu thong tin kia bro")
-      }
+        }else{
+            alert("nhap form di bro");
+        }
     }
         return (
             <div className="db">
-                
-                    <h3>Thay đổi thông tin nhân viên</h3>
-                    <Form.Label>Họ nhân viên</Form.Label>
-                    <InputGroup className="mb-3">
-                    <Form.Control
-                        required
-                        type="text"
-                        placeholder="Nhập họ nhân viên"
-                        value={firstName}
-                        onChange={e=>setFirstName(e.target.value)}
-                    />
-                    </InputGroup>
-                    <Form.Label>Tên nhân viên</Form.Label>
-                    <InputGroup className="mb-3">
-                    <Form.Control
-                        required
-                        type="text"
-                        placeholder="Nhập tên nhân viên"
-                        value={lastName}
-                        onChange={e=>setLastName(e.target.value)}
-                    />
-                    </InputGroup>
-                    <Form.Label>Chức vụ</Form.Label>
-                    <InputGroup className="mb-3">
-                    <Form.Control as="select" defaultValue={role} onChange={(e)=>setRole(e.target.value)}>
-                        <option value={0}>Người quản lý</option>
-                        <option value={1}>Nhân viên quầy</option>
-                        <option value={2}>Nhân viên lễ tân</option>
-                    </Form.Control>
-                    </InputGroup>
 
-                    <Form.Label>Lương</Form.Label>
+                <Form id="form">
+                    <h3>Sửa thông tin CSVC</h3>
+                    <Form.Label>Mã CSVC</Form.Label>
                     <InputGroup className="mb-3">
                     <Form.Control
                         required
                         type="text"
-                        placeholder="Nhập lương"
-                        value={salary}
-                        onChange={e=>setSalary(e.target.value)}
+                        value={facilities_code}
+                        placeholder='Vd. A001'
+                        onChange={e=>setFacilities_code(e.target.value)}
                     />
                     </InputGroup>
-
-                    <Form.Label>Số điện thoại</Form.Label>
+                    <Form.Label>Tên CSVC</Form.Label>
                     <InputGroup className="mb-3">
                     <Form.Control
                         required
                         type="text"
-                        placeholder="Nhập số điện thoại"
-                        value={phoneNumber}
-                        onChange={e=>setPhoneNumber(e.target.value)}
+                        placeholder="Vd. Đu quay"
+                        value={name}
+                        onChange={e=>setName(e.target.value)}
                     />
                     </InputGroup>
-
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>Khu</Form.Label>
                     <InputGroup className="mb-3">
                     <Form.Control
                         required
                         type="text"
-                        placeholder="Nhập email"
-                        value={email}
-                        onChange={e=>setEmail(e.target.value)}
+                        placeholder="Vd. X"
+                        value={region}
+                        onChange={e=>setRegion(e.target.value)}
                     />
                     </InputGroup>
-                    
-                    <label>Mật khẩu mới</label>
+                    <Form.Label>Tình trạng</Form.Label>
                     <InputGroup className="mb-3">
-                        <FormControl
+                    <Form.Control
+                        required
                         type="text"
-                        placeholder="Nhập mật khẩu"
-                        defaultValue=""
-                        onChange={e=>setPassword(e.target.value)}
+                        placeholder="Vd. Tốt"
+                        value={status}
+                        onChange={e=>setStatus(e.target.value)}
                     />
                     </InputGroup>
-                    
-                    
-               
-                <button onClick={e=>handleSubmit(e)} style={{paddingTop : '10px'}} className="btn btn-dark btn-lg btn-block">Submit</button>
-                
-            
-
+                <button onClick={(e)=>handleSubmit(e)} style={{paddingTop : '10px'}} className="btn btn-dark btn-lg btn-block">Submit</button>
+                </Form>
             </div>
-
         );
     
 }

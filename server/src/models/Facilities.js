@@ -16,7 +16,7 @@ const facilitiesSchema = new mongoose.Schema({
         require: true,
     },
     status: {
-        type: Boolean,
+        type: String,
         require: true,
     }
 })
