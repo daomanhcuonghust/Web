@@ -78,8 +78,8 @@ export const checkoutTicket = async (req, res, next) => {
       sale.push({content:"Event",sale:"20"});
       priceTicket=priceTicket-priceTicket*events[0].discount/100;
     }
-
-    if(ticket.id_ticket==titleTicket.type[0]._id){
+    let phat=titleTicket.type[0]
+    if(ticket.id_ticket==phat._id){
         const timeCheckIn=new Date(ticket.time_checkin);
         const timeCheckOut=new Date(data.time_checkout);
         const time=Math.abs(timeCheckOut-timeCheckIn)/1000/60-2*60; 

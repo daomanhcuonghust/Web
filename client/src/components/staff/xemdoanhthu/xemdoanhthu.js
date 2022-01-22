@@ -9,20 +9,9 @@ export default function Xemdoanhthu() {
     const [curStartDate, setCurStartDate] = useState("");
     const [curEndDate, setCurEndDate] = useState("");
     const [dataDoanhThu, setDataDoanhThu] = useState([])
-    const [dataDetail, setDataDetail] = useState({
-        data:{
-        },
-        user:[
-            {
-                usename: "phamthao",
-                soluong: 1,
-                tien: 200
-            }
-        ]
-    })
 
     const [canSee, setCanSee] = useState(false);
-    const [detail, setDetail] = useState(false);
+
     let total=0;
 
 
@@ -34,17 +23,18 @@ export default function Xemdoanhthu() {
                 time_to:endDate
             })
             console.log(res.data.data)
+            setDataDoanhThu(res.data.data)
         }catch(err){
             alert("err")
         }
         
     }
-
+console.log(dataDoanhThu)
     const handleSubmit=async()=>{
         if(startDate.length!==0&&endDate.length!==0){
             setCurStartDate(startDate);
             setCurEndDate(endDate);
-            console.log(startDate)      
+                 
             setCanSee(true);
             //call api o day
             fetchdoanhthu();
@@ -55,13 +45,7 @@ export default function Xemdoanhthu() {
         }
         
     }
-    const handleDetail=(input)=>{
-        setDetail(true);
-        setDataDetail(prevState=>({
-            ...prevState,
-            data: input
-        }));
-    }
+    
     return (
         <div className='xdt_ctn'>
             <div className='heading'>Thống kê doanh thu</div>
@@ -91,6 +75,8 @@ export default function Xemdoanhthu() {
                         <tr>
                             <th>Loại vé</th>
                             <th>Số lượng</th>
+                            <th>Thời điểm thanh toán</th>
+                            <th>ID người thanh toán</th>
                             <th>Số tiền</th>
                             <th></th>
                         </tr>
@@ -98,26 +84,31 @@ export default function Xemdoanhthu() {
                     <tbody>
                         {
                             
-                            dataDoanhThu.map(data=>{
-                                total+=data.tien;
+                            dataDoanhThu.map((data,index)=>{
+                                total+=data.price;
                                 return(
-                                    <tr key={data.id}>
-                                        <th>{data.ten}</th>
-                                        <th>{data.sl}</th>
-                                        <th>{data.tien}</th>
-                                        <th onClick={()=>handleDetail(data)}>Xem chi tiết</th>
+                                    <tr key={index}>
+                                        <th>{data.id_ticket}</th>
+                                        <th>{data.quantity}</th>
+                                        <th>{data.time_checkout.substring(0,10)}</th>
+                                        <th>{data.id_user?data.id_user:"null"}</th>
+                                        <th>{data.price}</th>
+                                        <th></th>
                                     </tr>
                                 )
                                 }
                             )
                         }
-                    </tbody>
-                    <tr>
+                        <tr>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th>{total}</th>
                         <th>Total</th>
-                    </tr>
+                        </tr>
+                    </tbody>
+                    
                 </Table>
             </div>
             {/* <div className={`detail${detail?'':' hidedetail'}`}>

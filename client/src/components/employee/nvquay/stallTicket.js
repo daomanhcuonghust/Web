@@ -37,20 +37,28 @@ function StallTicket() {
 
     const handleSubmit= async (e)=>{
         e.preventDefault();
-        if(idTicket&&quantity){
+        if(idTicket&&(quantity+1)){
             try{ 
                 let time_checkout=new Date();
                 let res=await axios.put("http://localhost:5000/api/v1/staff/checkin",
                 {
                     id_ticket:idTicket,
+                    quantity,
                     price:demoP,
                     is_paid:true,
                     time_checkout
                 },)
+                console.log(res.data)
+                if(res.data.status){
+                    alert("tạo vé thành công")
+                }else{
+                    alert("that bai")
+                }
             }catch(err){
                 alert("err")
             }
         }
+        setShowForm(!showForm)
     }
 
     return (
@@ -71,7 +79,7 @@ function StallTicket() {
                                 <option>Chọn loại vé</option>
                                 {
                                     ticketList.map((option) => 
-                                        <option value={option._id}>{option.nameTicket}</option>
+                                        <option key={option._id} value={option._id}>{option.nameTicket}</option>
                                     )
                                 }
                             </Form.Control>
