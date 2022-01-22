@@ -73,6 +73,39 @@ export default function Home1() {
                 </Row>
             </div>
 
+            <div className='homeComponent'>
+                <Row>
+                    <Col xs={6} style={{marginLeft:'20px'}}><img style={{width:'100%', height:'100%' , borderRadius:'20px'}} src="https://banahills.sunworld.vn/wp-content/uploads/2018/08/b2-768x511.jpg"/></Col>
+
+                    <Col style={{marginLeft:'100px', marginRight:'60px'}}>
+                        <h1 >Chúng tôi cung cấp các trải nghiệm tốt nhất</h1>
+                        <p>Hệ thống trò chơi đa dạng, cảnh quan thiên nhiên đặc sắc, thưởng thức ẩm thực phong phú và tận hưởng không khí lễ hội ngập tràn là những gì quý khách sẽ được trải nghiệm khi đến với TinkerBellGarden</p>
+                        <Row>
+                            <Col>
+                                <h2 style={{fontWeight: 'bold', color: '#F05454'}}>7</h2>
+                                <h3 style={{fontWeight: 'bold', color: '#676FA3'}}>ngày mở cửa trong tuần</h3>
+                            </Col>
+                            <Col>
+                                <h2 style={{fontWeight: 'bold', color: '#F05454'}}>156</h2>
+                                <h3 style={{fontWeight: 'bold', color: '#676FA3'}}>sự kiện trong năm 2021</h3>
+                                
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <h2 style={{fontWeight: 'bold', color: '#F05454'}}>873</h2>
+                                <h3 style={{fontWeight: 'bold', color: '#676FA3'}}>khách trung bình 1 ngày</h3>
+                            </Col>
+                            <Col>
+                                <h2 style={{fontWeight: 'bold', color: '#F05454'}}>1256</h2>
+                                <h3 style={{fontWeight: 'bold', color: '#676FA3'}}>trò chơi</h3>
+                            </Col>
+                        </Row>
+
+                    </Col>
+                </Row>
+            </div>
+
             <div className='homeComponent' style={{marginBottom:'100px'}}>
                 <Row>
                     

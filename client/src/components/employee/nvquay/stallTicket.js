@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from "react"
 import {Button, Form, Row, Col} from "react-bootstrap"
+import './stallTicket.css'
+
+const star = <span style={{color:'red'}}>*</span>;
 
 function StallTicket() {
     const [showForm, setShowForm] = useState(false);
@@ -32,10 +35,14 @@ function StallTicket() {
     }, [quantity,idTicket]);
 
     return (
+        <div style={{  minHeight: '100%',
+            width: '100%',
+            backgroundColor: '#4158D0',
+            backgroundImage: 'linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%)'}}>
         <div className="outer">
-            <div className="inner1">
+            <div className="stallTicket">
                 {!showForm
-                    ? <Button onClick={() => setShowForm(!showForm)}>Tạo vé</Button>
+                    ? <Button id='b1' onClick={() => setShowForm(!showForm)}>Tạo vé</Button>
                     : <>
                     <Form>
                         <Form.Group>
@@ -43,11 +50,11 @@ function StallTicket() {
                             <Form.Control placeholder="Tên khách hàng"/>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Số điện thoại</Form.Label>
+                            <Form.Label>Số điện thoại{star}</Form.Label>
                             <Form.Control type="tel" placeholder="Số điện thoại"/>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Loại vé</Form.Label>
+                            <Form.Label>Loại vé{star}</Form.Label>
                             <Form.Control as="select" onChange={e=>setIdTicket(e.target.value) }>
                                 {
                                     ticketList.map((option) => 
@@ -57,7 +64,7 @@ function StallTicket() {
                             </Form.Control>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label>Số lượng</Form.Label>
+                            <Form.Label>Số lượng{star}</Form.Label>
                             <Form.Control onChange={e=>setQuantity(e.target.value) } type="number" defaultValue="1" min="1"/>
                         </Form.Group>
                         {/* <Form.Group>
@@ -67,11 +74,12 @@ function StallTicket() {
                         <hr/>
                         <p>Giá tiền thanh toán: {demoP}vnđ</p>
                         <Button onClick={() => setShowForm(!showForm)}>Xác nhận</Button>
-                        <Button style={{ marginLeft:"10px" }} onClick={() => setShowForm(!showForm)}>Hủy bỏ</Button>
+                        <Button style={{ marginLeft:"40px" }} variant='danger' onClick={() => setShowForm(!showForm)}>Hủy bỏ</Button>
                     </Form>
                     </>
                 }
             </div>
+        </div>
         </div>
 
     )
