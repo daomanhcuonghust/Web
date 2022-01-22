@@ -27,7 +27,6 @@ export default function AddFacility() {
                 if(res.status==200){
                     alert("tao thanh cong");
                     navi("/manager/facilities")
-
                 } 
             }catch(error){
                 alert("tao that bai")

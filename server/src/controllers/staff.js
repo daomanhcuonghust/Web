@@ -38,8 +38,10 @@ export const checkInTicket = async (req, res, next) => {
   }
 };
 
+/////
 export const checkoutTicket = async (req, res, next) => {
   const idStaff = req.user.userId;
+  const sale=[];
   try {
     const data = req.body;
     const staff = await Staff.findById(idStaff);
@@ -56,13 +58,45 @@ export const checkoutTicket = async (req, res, next) => {
         message: "Có lỗi xảy ra",
       });
     }
-    await ticket.updateOne({ $set: { time_checkout: data.time_checkout } });
+    
+    const titleTicket = await Ticket.findOne({
+      type: { $elemMatch: { _id: ticket.id_ticket } },
+    });
 
-    res.status(200).json({ status: true, message: "Checkout success" });
+    let priceTicket=titleTicket.type.find((item,index)=>item._id==ticket.id_ticket).price;
+
+    const checkVipUser=await User.findById(ticket.id_user);
+    if(checkVipUser.is_vip){
+      sale.push({content:"Vip",sale:"20"});
+      priceTicket=priceTicket-priceTicket*0.2
+    }
+
+    const participants = await User_event.find({ id_user: ticket.id_user });
+    const Idevents = participants.map((item, index) => item.id_event);
+    const events = await Event.find({ _id: { $in: Idevents } }).sort({discount:-1});
+
+    if(participants){
+      sale.push({content:"Event",sale:"20"});
+      priceTicket=priceTicket-priceTicket*events[0].discount/100;
+    }
+
+    if(ticket.id_ticket==titleTicket.type[0]._id){
+        const timeCheckIn=new Date(ticket.time_checkin);
+        const timeCheckOut=new Date(data.time_checkout);
+        const time=Math.abs(timeCheckOut-timeCheckIn)/1000/60-2*60; 
+        if(time>=0){
+          const overTime=50000/30*time;
+          priceTicket +=overTime;
+        }
+    }
+
+    await ticket.updateOne({ $set: { time_checkout: data.time_checkout,price:priceTicket } });
+
+    res.status(200).json({ status: true, message: "Checkout success",ticket,events });
   } catch (error) {
     res.json({
       message: "Có lỗi xảy ra",
-      error,
+      error: error.message,
     });
   }
 };

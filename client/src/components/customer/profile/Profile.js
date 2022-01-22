@@ -20,6 +20,28 @@ export default function Profile() {
     useEffect(() => {
       fetchinfo();
     }, []);
+
+   const fetchvevaocua=async()=>{
+    try{
+        const res=await axios.get("http://localhost:5000/api/v1/ticket",{
+            title:"vé vào cửa"
+        })
+        console.log(res.data)
+        // if(res.data.success){
+        //     setVIP(res.data.VIP);
+        //     setFirstName(res.data.info.firstName)
+        //     setlastName(res.data.info.lastName)
+        //     setphoneNumber(res.data.info.phoneNumber)
+        //     setemail(res.data.info.email)
+        //     localStorage.setItem("nameUser",res.data.info.firstName+' '+res.data.info.lastName)
+        //     if(res.data.tickets!=="Nothing")
+        //         setlist(res.data.tickets);
+        // }
+        }catch(err){
+            alert("err");
+        }
+   }
+    
     
     const fetchinfo=async()=>{
         try{
@@ -139,8 +161,9 @@ export default function Profile() {
                                 <div key={index} className='one'>
                                     <div className='inftk'>
                                         <p>Loại vé: {tenve(iteam.id_ticket)}--Số lượng: {iteam.quantity}</p>
+                                        <p>ID vé: {iteam._id}</p>
                                         <p>Giá: {iteam.is_paid?iteam.price:"Đang chờ"}</p>
-                                        <p>Đặt vé lúc: {iteam.updatedAt}</p>
+                                        <p>Đặt vé lúc: {iteam.createdAt}</p>
                                         <p>Checkin lúc: {iteam.time_checkin?iteam.time_checkin:"Đang chờ"}</p>
                                         <p>Checkout lúc: {iteam.time_checkout?iteam.time_checkout:"Đang chờ"}</p>
                                     </div>
