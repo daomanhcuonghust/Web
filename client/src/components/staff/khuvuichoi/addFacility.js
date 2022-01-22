@@ -7,7 +7,7 @@ export default function AddFacility() {
     const [facilities_code, setFacilities_code] = useState("");
     const [name, setName] = useState("");
     const [region, setRegion] = useState("");
-    const [status, setStatus] = useState(0);
+    const [status, setStatus] = useState("");
 
     let navi=useNavigate();
 
@@ -27,7 +27,7 @@ export default function AddFacility() {
                 if(res.status==200){
                     alert("tao thanh cong");
                     navi("/manager/facilities")
-                    
+
                 } 
             }catch(error){
                 alert("tao that bai")
