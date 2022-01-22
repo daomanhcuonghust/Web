@@ -41,6 +41,7 @@ import {
   getFacilities,
   userJoinEvents,
   getOneStaff,
+  getTicketTypes,
 } from "../controllers"
 import {
   validateLogin,
@@ -65,6 +66,7 @@ router.post("/ticket", CreateTicket)
 router.get("/ticket/:id", infoTicket)
 router.patch("/ticket/:id", updateTicket)
 router.delete("/ticket/:id", deleteTicket)
+router.get("/ticket", getTicketTypes)
 
 router.put("/typeTicket/:id", createTypeTicket)
 router.delete("/typeTicket/:id/:typeId", deleteTypeTickte)
