@@ -55,7 +55,7 @@ export default function CustomerHeader() {
                   <button className="nut_dropdown">{nameUser}</button>
                   <div className='noidung_dropdown'>
                     <div onClick={()=>navi("/user/profile")}>Profile</div>
-                    <div onClick={()=>navi("/user/VIPRegister")}>Đăng ký VIP</div>
+                    {/* <div onClick={()=>navi("/user/VIPRegister")}>Đăng ký VIP</div> */}
                     <div onClick={()=>handleLogout()}>Đăng xuất</div>
                   </div>
                 </div>

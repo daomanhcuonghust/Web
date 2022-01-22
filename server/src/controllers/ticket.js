@@ -58,18 +58,24 @@ export const infoTicket = async (req, res, next) => {
 }
 
 export const getTicketTypes = async (req, res) => {
+  const ticketTitle = req.body.title
   try {
-    const ticketTitle = req.body.title
-    const ticket = Ticket.find({ title: ticketTitle })
-    const types = ticket.type
-    if (!ticket) {
+    console.log(ticketTitle)
+    const ticketName = await Ticket.find({ title: req.body.title })
+    const ticket=ticketName[0]
+    const type=ticket.type
+    
+    if (ticketName.length < 1) {
       return res.status(404).json({ success: false, message: "Not Found" })
+    }else{
+      res.status(200).json({
+        success: true,
+        message: "Tra cứu thành công",
+        data: type
+      })
     }
-    res.status(200).json({
-      success: true,
-      message: "Tra cứu thành công",
-      ticketTypes: types,
-    })
+    // console.log(ticketName[0])
+    // console.log(ticketName)
   } catch (error) {
     res.json({
       message: "Có lỗi xảy ra",

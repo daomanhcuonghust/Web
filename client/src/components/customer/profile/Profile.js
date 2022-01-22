@@ -21,25 +21,39 @@ export default function Profile() {
       fetchinfo();
     }, []);
 
-   const fetchvevaocua=async()=>{
-    try{
-        const res=await axios.get("http://localhost:5000/api/v1/ticket",{
-            title:"vé vào cửa"
-        })
-        console.log(res.data)
-        // if(res.data.success){
-        //     setVIP(res.data.VIP);
-        //     setFirstName(res.data.info.firstName)
-        //     setlastName(res.data.info.lastName)
-        //     setphoneNumber(res.data.info.phoneNumber)
-        //     setemail(res.data.info.email)
-        //     localStorage.setItem("nameUser",res.data.info.firstName+' '+res.data.info.lastName)
-        //     if(res.data.tickets!=="Nothing")
-        //         setlist(res.data.tickets);
-        // }
-        }catch(err){
-            alert("err");
-        }
+    useEffect(() => {
+        fetchvevaocua();
+    }, []);
+    
+    let title="vé vào cửa"
+   const fetchvevaocua= async ()=>{
+    // try{
+    //     const res=await axios.get("http://localhost:5000/api/v1/ticket",{title:title})
+    //     console.log(res)
+    //     // if(res.data.success){
+    //     //     setVIP(res.data.VIP);
+    //     //     setFirstName(res.data.info.firstName)
+    //     //     setlastName(res.data.info.lastName)
+    //     //     setphoneNumber(res.data.info.phoneNumber)
+    //     //     setemail(res.data.info.email)
+    //     //     localStorage.setItem("nameUser",res.data.info.firstName+' '+res.data.info.lastName)
+    //     //     if(res.data.tickets!=="Nothing")
+    //     //         setlist(res.data.tickets);
+    //     // }
+    //     }catch(err){
+    //         alert("err");
+    // }
+    // fetch("http://localhost:5000/api/v1/ticket", {
+    //     method: 'GET',
+        
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //     setTicketList(data.result.type);
+    // })
+    // .catch((error) => {
+    //     alert("eror");
+    // })
    }
     
     
