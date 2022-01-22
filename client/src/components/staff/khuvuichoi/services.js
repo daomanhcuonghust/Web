@@ -40,7 +40,17 @@ export default function Facilities(){
   },[]);
 
   const deleteRow=async(id) =>{
-      
+    try{
+        const res=await axios.delete(`http://localhost:5000/api/v1/typeTicket/61eab0db9cc06741fc0d4ce6/${id}`)
+        console.log(res);
+        if(res.status == 200){
+          const newdata=vephi.filter(iteam=>iteam._id!==id);
+          setvephi(newdata); 
+          alert("xoa thanh cong");
+        }
+      }catch(err){
+        alert("error")
+      }
   }
   return(
     <div className='db'>
@@ -67,7 +77,7 @@ export default function Facilities(){
                   <td>{iteam.nameTicket}</td>
                   <td>{iteam.price}</td>
                   <td className="text-center" >
-                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi()}>
+                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editservice/61eaafd99cc06741fc0d4cda/${iteam._id}`)}>
                       <BsPen/>
                     </Button>
                   </td>
@@ -78,7 +88,7 @@ export default function Facilities(){
         </tbody>
       </Table>
 
-      <h3>Vé tính phí</h3>
+      <h3>VIP</h3>
       <Table striped bordered >
         <thead>
           <tr>
@@ -100,7 +110,7 @@ export default function Facilities(){
                   <td>{iteam.nameTicket}</td>
                   <td>{iteam.price}</td>
                   <td className="text-center" >
-                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi()}>
+                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editservice/61eae5e4ac7bee37e0362af5/${iteam._id}`)}>
                       <BsPen/>
                     </Button>
                   </td>
@@ -111,7 +121,7 @@ export default function Facilities(){
         </tbody>
       </Table>
 
-      <h3>VIP</h3>
+      <h3>Vé tính phí</h3>
       <Table striped bordered >
         <thead>
           <tr>
@@ -119,7 +129,7 @@ export default function Facilities(){
             <th>Tên vé</th>
             <th>Giá vé</th>
             <th style={{paddingLeft:'20px', width:'150px'}}>
-                <Button onClick={()=>navi(`/manager/addFacility`)}>Thêm CSVC</Button>
+                <Button onClick={()=>navi(`/manager/addvephi`)}>Thêm vé quầy</Button>
             </th>     
           </tr>
         </thead>
@@ -133,8 +143,11 @@ export default function Facilities(){
                   <td>{iteam.nameTicket}</td>
                   <td>{iteam.price}</td>
                   <td className="text-center" >
-                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi()}>
+                    <Button variant="outline-secondary" style= {{ border: `none` }} onClick={()=>navi(`/manager/editservice/61eab0db9cc06741fc0d4ce6/${iteam._id}`)}>
                       <BsPen/>
+                    </Button>
+                    <Button variant="outline-danger" style= {{ border: `none`, marginLeft:'20px' }} onClick={()=>deleteRow(iteam._id)}>
+                      <AiOutlineDelete />
                     </Button>
                   </td>
                 </tr>

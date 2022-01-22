@@ -49,11 +49,10 @@ const UserSchema = new mongoose.Schema({
         default: false,
 
     },
-    id_vip_transition: {
-        type: String,
+    timeVip: {
+        type: Date,
         required: false
     }  
-
 });
 UserSchema.pre('save', async function (next) {
     // Hash the password before saving the user model

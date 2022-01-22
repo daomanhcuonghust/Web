@@ -1,15 +1,14 @@
 import { Staff, User, User_ticket, Ticket } from "../models";
 
 export const checkInTicket = async (req, res, next) => {
-  const idStaff = req.user.userId;
   try {
     const data = req.body;
-    const staff = await Staff.findById(idStaff);
-    if (staff.role !== 2) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Only the front desk can check in" });
-    }
+   
+    // if (staff.role !==1) {
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, message: "Only the front desk can check in" });
+    // }
     const ticket = await User_ticket.findById(data.idUserTicket);
 
     //console.log('ticket',ticket)
@@ -33,7 +32,7 @@ export const checkInTicket = async (req, res, next) => {
   } catch (error) {
     res.json({
       message: "Có lỗi xảy ra",
-      error,
+      error:error.message,
     });
   }
 };

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {Button, Form, Row, Col} from "react-bootstrap"
 import './stallTicket.css'
+import axios from "axios"
 
 const star = <span style={{color:'red'}}>*</span>;
 
@@ -34,6 +35,24 @@ function StallTicket() {
         })
     }, [quantity,idTicket]);
 
+    const handleSubmit= async (e)=>{
+        e.preventDefault();
+        if(idTicket&&quantity){
+            try{ 
+                let time_checkout=new Date();
+                let res=await axios.put("http://localhost:5000/api/v1/staff/checkin",
+                {
+                    id_ticket:idTicket,
+                    price:demoP,
+                    is_paid:true,
+                    time_checkout
+                },)
+            }catch(err){
+                alert("err")
+            }
+        }
+    }
+
     return (
         <div style={{  minHeight: '100%',
             width: '100%',
@@ -45,17 +64,11 @@ function StallTicket() {
                     ? <Button id='b1' onClick={() => setShowForm(!showForm)}>Tạo vé</Button>
                     : <>
                     <Form>
-                        <Form.Group>
-                            <Form.Label>Tên khách hàng</Form.Label>
-                            <Form.Control placeholder="Tên khách hàng"/>
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Số điện thoại{star}</Form.Label>
-                            <Form.Control type="tel" placeholder="Số điện thoại"/>
-                        </Form.Group>
+                        
                         <Form.Group>
                             <Form.Label>Loại vé{star}</Form.Label>
                             <Form.Control as="select" onChange={e=>setIdTicket(e.target.value) }>
+                                <option>Chọn loại vé</option>
                                 {
                                     ticketList.map((option) => 
                                         <option value={option._id}>{option.nameTicket}</option>
@@ -73,7 +86,7 @@ function StallTicket() {
                         </Form.Group> */}
                         <hr/>
                         <p>Giá tiền thanh toán: {demoP}vnđ</p>
-                        <Button onClick={() => setShowForm(!showForm)}>Xác nhận</Button>
+                        <Button onClick={(e) => handleSubmit(e)}>Xác nhận</Button>
                         <Button style={{ marginLeft:"40px" }} variant='danger' onClick={() => setShowForm(!showForm)}>Hủy bỏ</Button>
                     </Form>
                     </>

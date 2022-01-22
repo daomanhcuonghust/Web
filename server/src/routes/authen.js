@@ -75,7 +75,7 @@ router.get("/ticket/user/:userId", userTicket)
 
 router.put("/typeTicket/:id", createTypeTicket)
 router.put("/ticket/:id/:typeId", updateTypeTicket)
-router.get("/ticketIncome", validateViewIncome, getIncome)
+router.post("/ticketIncome", validateViewIncome, getIncome)
 
 router.get("/facilities", getFacilities)
 router.get("/facilities/:id", getOneFacility)
@@ -107,6 +107,6 @@ router.get("/allEvent", getAllEvent)
 router.post("/user-buy-ticket", signedIn, UserBuyTicket)
 router.post("/ticket-vip", signedIn, createVipTicket)
 
-router.put("/staff/checkin", signedIn, checkInTicket)
+router.put("/staff/checkin", checkInTicket)
 router.put("/staff/checkout", signedIn, checkoutTicket)
 export default router

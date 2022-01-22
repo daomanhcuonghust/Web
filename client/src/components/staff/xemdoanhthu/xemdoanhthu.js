@@ -1,32 +1,14 @@
-import React ,{ useState} from 'react';
+import axios from 'axios';
+import React ,{ useEffect, useState} from 'react';
 import { Table } from 'react-bootstrap';
 import './Xemdoanhthu.css'
 
 export default function Xemdoanhthu() {
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
     const [curStartDate, setCurStartDate] = useState("");
     const [curEndDate, setCurEndDate] = useState("");
-    const [dataDoanhThu, setDataDoanhThu] = useState([
-        {
-            id: 1,
-            ten: "abc",
-            sl: 10,
-            tien: 3000
-        },
-        {
-            id: 2,
-            ten: "abc",
-            sl: 10,
-            tien: 3000
-        },
-        {
-            id: 3,
-            ten: "abc",
-            sl: 10,
-            tien: 3000
-        }
-    ])
+    const [dataDoanhThu, setDataDoanhThu] = useState([])
     const [dataDetail, setDataDetail] = useState({
         data:{
         },
@@ -42,12 +24,30 @@ export default function Xemdoanhthu() {
     const [canSee, setCanSee] = useState(false);
     const [detail, setDetail] = useState(false);
     let total=0;
-    const handleSubmit=()=>{
+
+
+    const fetchdoanhthu=async()=>{
+        try{
+            let res =await axios.post("http://localhost:5000/api/v1/ticketIncome",
+            {
+                time_from:startDate,
+                time_to:endDate
+            })
+            console.log(res.data.data)
+        }catch(err){
+            alert("err")
+        }
+        
+    }
+
+    const handleSubmit=async()=>{
         if(startDate.length!==0&&endDate.length!==0){
             setCurStartDate(startDate);
-            setCurEndDate(endDate);          
+            setCurEndDate(endDate);
+            console.log(startDate)      
             setCanSee(true);
             //call api o day
+            fetchdoanhthu();
         }
         else{        
             setCanSee(false);
@@ -120,7 +120,7 @@ export default function Xemdoanhthu() {
                     </tr>
                 </Table>
             </div>
-            <div className={`detail${detail?'':' hidedetail'}`}>
+            {/* <div className={`detail${detail?'':' hidedetail'}`}>
                 <span className="exit" onClick={()=>setDetail(false)}>X</span>
                 <h3 className='namedetail'>{dataDetail.data.ten}</h3>
                 <h4 className='timedetail'>Từ {curStartDate} đến {curEndDate}</h4>
@@ -147,7 +147,7 @@ export default function Xemdoanhthu() {
                         }
                     </tbody>
                 </Table>
-            </div>
+            </div> */}
         </div>
     )
 }

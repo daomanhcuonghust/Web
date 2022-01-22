@@ -269,12 +269,16 @@ export const userTicket = async (req, res, next) => {
 
 export const getIncome = handleAsync(async (req, res) => {
   try {
+    let a=req.body.time_from
+    let b= req.body.time_to
     const query = await User_ticket.find({
       is_paid: true,
-      time_checkout: {
-        $gte: req.body.time_from,
-        $lte: req.body.time_to,
-      },
+      time_checkout: 
+        { 
+          $gte: new Date(req.body.time_from), 
+          $lte: new Date(req.body.time_to) 
+        }
+      ,
     })
     res.json({
       data: query,
