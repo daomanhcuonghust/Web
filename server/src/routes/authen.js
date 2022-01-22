@@ -42,6 +42,9 @@ import {
   userJoinEvents,
   getOneStaff,
   getTicketTypes,
+  getSpecificTicket,
+  getSpecificUser,
+  UserBuyTicketWithoutToken
 } from "../controllers"
 import {
   validateLogin,
@@ -105,8 +108,12 @@ router.get("/latestEvents", latestEvents)
 router.get("/allEvent", getAllEvent)
 
 router.post("/user-buy-ticket", signedIn, UserBuyTicket)
-router.post("/ticket-vip", signedIn, createVipTicket)
+router.post("/ticket-vip", createVipTicket)
 
 router.put("/staff/checkin", checkInTicket)
-router.put("/staff/checkout", signedIn, checkoutTicket)
+router.put("/staff/checkout", checkoutTicket)
+
+router.get("/userTicket/:id", getSpecificTicket)
+router.get("/iduser/:phoneNumber", getSpecificUser)
+router.post("/userbuyticketwithouttoken", UserBuyTicketWithoutToken)
 export default router

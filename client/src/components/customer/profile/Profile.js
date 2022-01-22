@@ -66,7 +66,7 @@ export default function Profile() {
         })
         console.log(res.data)
         if(res.data.success){
-            setVIP(res.data.VIP);
+            setVIP(res.data.info.timeVip);
             setFirstName(res.data.info.firstName)
             setlastName(res.data.info.lastName)
             setphoneNumber(res.data.info.phoneNumber)
@@ -155,14 +155,7 @@ export default function Profile() {
                         <button onClick={()=>handleUpdate()}>Cập nhật</button>
                     </div>
                     <div className='vip'>
-                        <p>VIP: {VIP}</p>
-                        {
-                            (VIP==="NoVIP")
-                            ?
-                            <Link to="/user/VIPRegister">Đăng kí</Link>
-                            :
-                            <Link to="/user/VIPRegister">Gia hạn</Link>
-                        }
+                        <p>VIP: {VIP?VIP:"No VIP"}</p>
                     </div>
                 </div>
                 <div className='ticket'>
@@ -176,24 +169,25 @@ export default function Profile() {
                                     <div className='inftk'>
                                         <p>Loại vé: {tenve(iteam.id_ticket)}--Số lượng: {iteam.quantity}</p>
                                         <p>ID vé: {iteam._id}</p>
-                                        <p>Giá: {iteam.is_paid?iteam.price:"Đang chờ"}</p>
+                                        <p>Giá: {iteam.time_checkout?iteam.price:"Đang chờ"}</p>
                                         <p>Đặt vé lúc: {iteam.createdAt}</p>
                                         <p>Checkin lúc: {iteam.time_checkin?iteam.time_checkin:"Đang chờ"}</p>
                                         <p>Checkout lúc: {iteam.time_checkout?iteam.time_checkout:"Đang chờ"}</p>
                                     </div>
                                     <div className='state'>
                                         {
-                                            (iteam.time_checkin===null)
+                                            (iteam.time_checkout===null)
                                             ?
-                                            <p style={{color:"grey"}}>Chưa checkin</p>
-                                            :
                                             (
-                                                (iteam.time_checkout===null)
+                                                (iteam.time_checkin===null)
                                                 ?
-                                                <p style={{color:"blue"}}>Chờ thanh toán</p>
+                                                <p style={{color:"blue"}}>Chưa checkin</p>
                                                 :
-                                                <p style={{color:"green"}}>Đã thanh toán</p>
+                                                <p style={{color:"green"}}>Đang chờ thanh toán</p>
                                             )
+                                            :
+                                            <p style={{color:"green"}}>Đã thanh toán</p>
+                                            
                                         }
                                     </div>
                                 </div>

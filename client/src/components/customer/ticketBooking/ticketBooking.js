@@ -38,6 +38,7 @@ function TicketBooking() {
                                         {
                                             id_ticket:idTicket,
                                             quantity,
+                                            price:demoP,
                                             is_paid:false        
                                         } 
                                         ,

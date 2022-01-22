@@ -63,19 +63,10 @@ export const getPersonalInfo = handleAsync(async (req, res) => {
   try {
     const userinfo = await User.findById(userId)
     const userticket = await User_ticket.find({ id_user: userId })
-    const vipInfo = await Vip_transition.findById(userinfo.id_vip_transition)
+    // const vipInfo = await Vip_transition.findById(userinfo.id_vip_transition)
     // const vipExpiration = await Vip_transition.find()
     if (!userinfo) {
       return res.status(404).json({ success: false, message: "User Not Found" })
-    }
-    if (userticket.length < 1 && !vipInfo) {
-      return res.status(200).json({
-        success: true,
-        message: "Success",
-        info: userinfo,
-        tickets: "Nothing",
-        VIP: "NoVIP",
-      })
     }
     if (userticket.length < 1) {
       return res.status(200).json({
@@ -83,16 +74,6 @@ export const getPersonalInfo = handleAsync(async (req, res) => {
         message: "Success",
         info: userinfo,
         tickets: "Nothing",
-        VIP: vipInfo,
-      })
-    }
-    if (!vipInfo) {
-      return res.status(200).json({
-        success: true,
-        message: "Success",
-        info: userinfo,
-        tickets: userticket,
-        VIP: "NoVIP",
       })
     }
     res.status(200).json({
@@ -100,7 +81,6 @@ export const getPersonalInfo = handleAsync(async (req, res) => {
       message: "Success",
       info: userinfo,
       tickets: userticket,
-      VIP: vipInfo,
     })
   } catch (error) {
     res.status(500).json({ success: false, message: "INTERNAL SERVER ERROR" })
@@ -153,5 +133,27 @@ export const userJoinEvents = async (req, res, next) => {
     })
   } catch (error) {
     res.status(500).json({ success: false, message: "INTERNAL SERVER ERROR" })
+  }
+}
+
+export const getSpecificUser = async (req, res, next) => {
+  try {
+    const data = await User.findOne({phoneNumber: req.params.phoneNumber})
+    if (!data) {
+      return res.status(404).json({
+        success: false,
+        message: "No user with this phoneNumber in the system",
+      })
+    }
+    res.status(200).json({
+      success: true,
+      message: "Get user success",
+      data: data._id,
+    })
+  } catch (error) {
+    res.json({
+      message: "Có lỗi xảy ra",
+      error,
+    })
   }
 }

@@ -272,7 +272,6 @@ export const getIncome = handleAsync(async (req, res) => {
     let a=req.body.time_from
     let b= req.body.time_to
     const query = await User_ticket.find({
-      is_paid: true,
       time_checkout: 
         { 
           $gte: new Date(req.body.time_from), 
@@ -286,6 +285,60 @@ export const getIncome = handleAsync(async (req, res) => {
   } catch (error) {
     res.json({
       message: "Có lỗi xảy ra",
+      error,
+    })
+  }
+})
+
+export const getSpecificTicket = async (req, res) => {
+  try {
+    const data = await User_ticket.findById(req.params.id)
+    if (!data) {
+      return res.status(404).json({
+        success: false,
+        message: "No user tickets with this ID in the system",
+      })
+    }
+    res.status(200).json({
+      success: true,
+      message: "Get user's ticket success",
+      result: data,
+    })
+  } catch (error) {
+    res.json({
+      message: "Có lỗi xảy ra",
+      error:error.message,
+    })
+  }
+}
+
+export const UserBuyTicketWithoutToken = handleAsync(async (req, res) => {
+  try {
+    const isExistTicket = await Ticket.find({
+      type: { $elemMatch: { _id: req.body.id_ticket } },
+    })
+    const isExistUser = await User.findById(req.body.id_user)
+
+    if (!isExistTicket && !isExistUser) {
+      return res.status(200).json({
+        status: 404,
+        message: "Vé hoặc người mua vé không tồn tại",
+      })
+    }
+
+    const ticket = { ...req.body }
+
+    const data = new User_ticket(ticket)
+    await data.save()
+
+    res.json({
+      success: true,
+      message: "Mua vé thành công",
+      data,
+    })
+  } catch (error) {
+    res.json({
+      message: "Có lỗi xảy ra",
       error,
     })
   }

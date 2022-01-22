@@ -4,14 +4,14 @@ import { Demo, User, Staff,Ticket } from "../models";
 export const createVipTicket = async (req, res, next) => {
   try {
     const data = req.body;
-    const userId = req.user.userId;
+    // const userId = req.user.userId;
 
 
-    const checkStaff = await Staff.findById(userId);
+    // const checkStaff = await Staff.findById(userId);
 
-    if (checkStaff.role !== 2) {
-      return res.status(400).json({ success: false, message: "Not Found" });
-    }
+    // if (checkStaff.role !== 2) {
+    //   return res.status(400).json({ success: false, message: "Not Found" });
+    // }
 
     const checkUser = await User.findById(data.id_user);
 

@@ -1,4 +1,4 @@
-import { Staff, User, User_ticket, Ticket } from "../models";
+import { Staff, User, User_ticket, Ticket,User_event,Event } from "../models";
 
 export const checkInTicket = async (req, res, next) => {
   try {
@@ -10,10 +10,12 @@ export const checkInTicket = async (req, res, next) => {
     //     .json({ success: false, message: "Only the front desk can check in" });
     // }
     const ticket = await User_ticket.findById(data.idUserTicket);
+    let idut=' ';
 
     //console.log('ticket',ticket)
     if (ticket) {
       await ticket.updateOne({ $set: { time_checkin: data.time_checkin } });
+      return res.status(200).json({ status: true, message: "Checkin success" });
     } else {
       const isExistTicket = await Ticket.find({
         type: { $elemMatch: { _id: req.body.id_ticket } },
@@ -25,10 +27,11 @@ export const checkInTicket = async (req, res, next) => {
         });
       }
       const userTicket = new User_ticket(req.body);
+      idut=userTicket._id;
       await userTicket.save();
     }
 
-    res.status(200).json({ status: true, message: "Checkin success" });
+    res.status(200).json({ status: true, message: "Checkin success", id:idut });
   } catch (error) {
     res.json({
       message: "Có lỗi xảy ra",
@@ -39,16 +42,16 @@ export const checkInTicket = async (req, res, next) => {
 
 /////
 export const checkoutTicket = async (req, res, next) => {
-  const idStaff = req.user.userId;
+  // const idStaff = req.user.userId;
   const sale=[];
   try {
     const data = req.body;
-    const staff = await Staff.findById(idStaff);
-    if (staff.role !== 2) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Only the front desk can check in" });
-    }
+    // const staff = await Staff.findById(idStaff);
+    // if (staff.role !== 2) {
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, message: "Only the front desk can check in" });
+    // }
     
     const ticket = await User_ticket.findById(data.idUserTicket);
 
@@ -62,9 +65,10 @@ export const checkoutTicket = async (req, res, next) => {
       type: { $elemMatch: { _id: ticket.id_ticket } },
     });
 
-    let priceTicket=titleTicket.type.find((item,index)=>item._id==ticket.id_ticket).price;
-
+    // let priceTicket=titleTicket.type.find((item,index)=>item._id==ticket.id_ticket).price;
+    let priceTicket=ticket.price;
     const checkVipUser=await User.findById(ticket.id_user);
+    if(checkVipUser){
     if(checkVipUser.is_vip){
       sale.push({content:"Vip",sale:"20"});
       priceTicket=priceTicket-priceTicket*0.2
@@ -78,6 +82,7 @@ export const checkoutTicket = async (req, res, next) => {
       sale.push({content:"Event",sale:"20"});
       priceTicket=priceTicket-priceTicket*events[0].discount/100;
     }
+  }
     let phat=titleTicket.type[0]
     if(ticket.id_ticket==phat._id){
         const timeCheckIn=new Date(ticket.time_checkin);
@@ -91,7 +96,7 @@ export const checkoutTicket = async (req, res, next) => {
 
     await ticket.updateOne({ $set: { time_checkout: data.time_checkout,price:priceTicket } });
 
-    res.status(200).json({ status: true, message: "Checkout success",ticket,events });
+    res.status(200).json({ status: true, message: "Checkout success",ticket,priceTicket });
   } catch (error) {
     res.json({
       message: "Có lỗi xảy ra",
